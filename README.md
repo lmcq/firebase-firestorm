@@ -25,7 +25,7 @@ Firestorm relies on using Typescript's [experimental decorators](https://www.typ
 ````json
 {
   "compilerOptions": {
-    "target": "ES5", /* or greater */
+    "target": "ES5", // or greater
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
   }
@@ -170,7 +170,7 @@ const commentCollection = postRef.collection(Post);
 ````
 
 ##### Querying data
-You can use the `find(query : ICollectionQuery)` method to query data. A full list of options are available in the [docs](), but they are essentially the same as what is available with firestore.
+You can use the `find(query : ICollectionQuery)` method to query data. A full list of options are available in the [docs](https://lmcq.github.io/firebase-firestorm/), but they are essentially the same as what is available with firestore.
 ````typescript
   const posts = Collection(Post).find({
     where: [
