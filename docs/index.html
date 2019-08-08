@@ -1,0 +1,668 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>firebase-firestorm</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">firebase-firestorm</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> firebase-firestorm</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#firebase-firestorm-for-typescript" id="firebase-firestorm-for-typescript" style="color: inherit; text-decoration: none;">
+					<h1>Firebase Firestorm for Typescript</h1>
+				</a>
+				<p><a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a></p>
+				<p>Firestorm is an <a href="https://en.wikipedia.org/wiki/Object-relational_mapping">ORM</a> for <a href="https://firebase.google.com/docs/firestore">firestore</a> which can be used with Typescript.</p>
+				<a href="#contents" id="contents" style="color: inherit; text-decoration: none;">
+					<h2>Contents</h2>
+				</a>
+				<ul>
+					<li><a href="#requirements">Requirements</a></li>
+					<li><a href="#installation">Installation</a></li>
+					<li><a href="#usage">Usage</a><ul>
+							<li><a href="#getting-started">Getting Started</a></li>
+							<li><a href="#custom-data-types">Custom Data Types</a></li>
+							<li><a href="#initialization-options">Initialization Options</a></li>
+						</ul>
+					</li>
+					<li><a href="#important-gotchas">Important Gotcha&#39;s</a></li>
+					<li><a href="#limitations">Limitations</a></li>
+					<li><a href="#development">Development</a><ul>
+							<li><a href="#setup">Setup</a></li>
+							<li><a href="#testing">Testing</a></li>
+						</ul>
+					</li>
+					<li><a href="#contributing">Contributing</a></li>
+					<li><a href="#license">License</a></li>
+				</ul>
+				<a href="#requirements" id="requirements" style="color: inherit; text-decoration: none;">
+					<h2>Requirements</h2>
+				</a>
+				<p>Firestorm relies on using Typescript&#39;s <a href="https://www.typescriptlang.org/docs/handbook/decorators.html">experimental decorators</a> for defining your models. Please ensure you have the following in your <code>tsconfig.json</code>:</p>
+				<pre><code class="language-json">{
+  &quot;compilerOptions&quot;: {
+    &quot;target&quot;: &quot;ES5&quot;, /* or greater */
+    &quot;experimentalDecorators&quot;: true,
+    &quot;emitDecoratorMetadata&quot;: true,
+  }
+}</code></pre>
+				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+					<h2>Installation</h2>
+				</a>
+				<pre><code class="language-bash">$ npm install firebase-firestorm</code></pre>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
+					<h3>Getting Started</h3>
+				</a>
+				<p>In this section, we will walk you through an example of how a basic blogging database might look using posts, comments and authors.</p>
+				<a href="#1-initialize-firestorm" id="1-initialize-firestorm" style="color: inherit; text-decoration: none;">
+					<h4>1. Initialize firestorm</h4>
+				</a>
+				<p>Call <code>firestorm.initialize(firestore, options?)</code> as soon as you intialize your firestore app. See <a href="###-initialization-options">intialization options</a> for more information about intiailizing firestorm.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> firestorm <span class="hljs-keyword">from</span> <span class="hljs-string">'firebase-firestorm'</span>;
+...
+<span class="hljs-keyword">const</span> firestore = firebase.initializeApp(...);
+firestorm.initialize(firestore, <span class="hljs-comment">/* options */</span>);
+...</code></pre>
+				<a href="#2-defining-root-collections" id="2-defining-root-collections" style="color: inherit; text-decoration: none;">
+					<h4>2. Defining root collections</h4>
+				</a>
+				<p>Here we have a class representing a <code>posts</code> collection. Entity classes are typically non-pluralized as they represent a single document from that collection. To define a root collection you must:</p>
+				<ul>
+					<li>Extend from the <code>Entity</code> class.</li>
+					<li>Annotate your class with <code>@rootCollection(opts: ICollectionConfig)</code>.</li>
+					<li>Declare a series of fields, annoted with <code>@field(opts: IFieldConfig)</code>.</li>
+				</ul>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Entity, rootCollection, field } <span class="hljs-keyword">from</span> <span class="hljs-string">'firebase-firestorm'</span>;
+
+<span class="hljs-meta">@rootCollection</span>({
+  name: <span class="hljs-string">'posts'</span>,
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> Post <span class="hljs-keyword">extends</span> Entity {
+  <span class="hljs-meta">@field</span>({ name: <span class="hljs-string">'title'</span> })
+  title!: <span class="hljs-built_in">string</span>;
+
+  <span class="hljs-meta">@field</span>({ name: <span class="hljs-string">'content'</span> })
+  content!: <span class="hljs-built_in">string</span>;
+}</code></pre>
+				<a href="#3-defining-subcollections" id="3-defining-subcollections" style="color: inherit; text-decoration: none;">
+					<h4>3. Defining subcollections</h4>
+				</a>
+				<blockquote>
+					<p>Each of your models, whether they represent a root collection or subcollection must extend from the <code>Entity</code> class provided.</p>
+				</blockquote>
+				<p>Now we want documents in the <code>posts</code> collection to have a subcollection of <code>comments</code>. First, we need to create as class for the comments. Notice how we do not annotate the class with <code>@rootCollection</code>.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Entity, rootCollection, field } <span class="hljs-keyword">from</span> <span class="hljs-string">'firebase-firestorm'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> Comment <span class="hljs-keyword">extends</span> Entity {
+  <span class="hljs-meta">@field</span>({ name: <span class="hljs-string">'content'</span> })
+  content!: <span class="hljs-built_in">string</span>;
+
+  <span class="hljs-meta">@field</span>({ name: <span class="hljs-string">'by'</span> })
+  by!: <span class="hljs-built_in">string</span>;
+}</code></pre>
+				<p>Back in the <code>Post</code> class, we can add <code>Comment</code> as a subcollection using the <code>@subCollection(opts: ISubcollectionConfig)</code> decorator.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Entity, ICollection, rootCollection, field } <span class="hljs-keyword">from</span> <span class="hljs-string">'firebase-firestorm'</span>;
+<span class="hljs-keyword">import</span> Comment <span class="hljs-keyword">from</span> <span class="hljs-string">'./Comment'</span>;
+
+<span class="hljs-meta">@rootCollection</span>({
+  name: <span class="hljs-string">'posts'</span>,
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> Post <span class="hljs-keyword">extends</span> Entity {
+  ...
+  <span class="hljs-meta">@subCollection</span>({
+    name: <span class="hljs-string">'comments'</span>,
+    entity: Comment, <span class="hljs-comment">// we must define the entity class due to limitations in Typescript's reflection capabilities. Progress should be made on this issue in future releases.</span>
+  })
+  comments!: ICollection&lt;Comment&gt;;
+  ...
+}</code></pre>
+				<a href="#4-defining-document-references" id="4-defining-document-references" style="color: inherit; text-decoration: none;">
+					<h4>4. Defining document references</h4>
+				</a>
+				<p>Finally we want documents in the <code>posts</code> collection to reference an author in an <code>authors</code> collection (another root collection). First, we define the <code>Author</code> entity:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Entity, rootCollection, field } <span class="hljs-keyword">from</span> <span class="hljs-string">'firebase-firestorm'</span>;
+
+<span class="hljs-meta">@rootCollection</span>({
+  name: <span class="hljs-string">'authors'</span>,
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> Author <span class="hljs-keyword">extends</span> Entity {
+  <span class="hljs-meta">@field</span>({ name: <span class="hljs-string">'name'</span> })
+  name!: <span class="hljs-built_in">string</span>;
+}</code></pre>
+				<p>Then we can add an <code>Author</code> reference to the <code>Post</code> entity using the <code>@documentRef(opts: IDocumentRefConfig)</code> decorator:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Entity, ICollection, IDocumentRef, rootCollection, field } <span class="hljs-keyword">from</span> <span class="hljs-string">'firebase-firestorm'</span>;
+<span class="hljs-keyword">import</span> Author <span class="hljs-keyword">from</span> <span class="hljs-string">'./Author'</span>;
+
+<span class="hljs-meta">@rootCollection</span>({
+  name: <span class="hljs-string">'posts'</span>,
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> Post <span class="hljs-keyword">extends</span> Entity {
+  ...
+  <span class="hljs-meta">@documentRef</span>({
+    name: <span class="hljs-string">'author'</span>,
+    entity: Author, <span class="hljs-comment">// we must define the entity class due to limitations in Typescript's reflection capabilities. Progress should be made on this issue in future releases.</span>
+  })
+  author!: IDocumentRef&lt;Author&gt;;
+  ...
+}</code></pre>
+				<a href="#5-queryingupdating-data" id="5-queryingupdating-data" style="color: inherit; text-decoration: none;">
+					<h4>5. Querying/updating data</h4>
+				</a>
+				<p>Now we&#39;ve built our model, we&#39;re ready to start querying. Calling <code>Collection(entity : IEntity)</code> will return a list of methods use can use to manipulate the data.</p>
+				<a href="#getting-a-document" id="getting-a-document" style="color: inherit; text-decoration: none;">
+					<h5>Getting a document</h5>
+				</a>
+				<pre><code class="language-typescript">...
+<span class="hljs-keyword">const</span> post = Collection(Post).get(<span class="hljs-string">'post-1'</span>).then(<span class="hljs-function">(<span class="hljs-params">post : Post</span>) =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(post);
+});
+...</code></pre>
+				<a href="#getting-a-subcollection" id="getting-a-subcollection" style="color: inherit; text-decoration: none;">
+					<h5>Getting a subcollection</h5>
+				</a>
+				<p>In our example <code>Comment</code> is a subcollection of <code>Post</code>. You can get subcollections from a retrieved document, or a document reference.</p>
+				<pre><code class="language-typescript"><span class="hljs-comment">// Comment subcollection from document.</span>
+<span class="hljs-keyword">const</span> post = Collection(Post).get(<span class="hljs-string">'post-1'</span>).then(<span class="hljs-function">(<span class="hljs-params">post : Post</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> commentCollection = post.collection(Post);
+});
+
+<span class="hljs-comment">// Comment subcollection from document ref.</span>
+<span class="hljs-keyword">const</span> postRef = Collection(Post).doc(<span class="hljs-string">'post-1'</span>);
+<span class="hljs-keyword">const</span> commentCollection = postRef.collection(Post);</code></pre>
+				<a href="#querying-data" id="querying-data" style="color: inherit; text-decoration: none;">
+					<h5>Querying data</h5>
+				</a>
+				<p>You can use the <code>find(query : ICollectionQuery)</code> method to query data. A full list of options are available in the <a href="">docs</a>, but they are essentially the same as what is available with firestore.</p>
+				<pre><code class="language-typescript">  <span class="hljs-keyword">const</span> posts = Collection(Post).find({
+    where: [
+      [<span class="hljs-string">'title'</span>, <span class="hljs-string">'=='</span>, <span class="hljs-string">'Example Title'</span>],
+      ...
+    ],
+  });</code></pre>
+				<a href="#creating-documents" id="creating-documents" style="color: inherit; text-decoration: none;">
+					<h5>Creating documents</h5>
+				</a>
+				<pre><code class="language-typescript">...
+  <span class="hljs-keyword">const</span> post = <span class="hljs-keyword">new</span> Post();
+  post.id = <span class="hljs-string">'post-1'</span>; <span class="hljs-comment">// id is optional, if it is not defined it will be generated by firestore.</span>
+  post.title = <span class="hljs-string">'Untitled'</span>;
+  <span class="hljs-keyword">let</span> savedPost : Post;
+  Collection(Post).create(post).then(<span class="hljs-function">(<span class="hljs-params">_savedPost : Post</span>) =&gt;</span> {
+    savedPost = _savedPost;
+  });
+...</code></pre>
+				<a href="#updating-documents" id="updating-documents" style="color: inherit; text-decoration: none;">
+					<h5>Updating documents</h5>
+				</a>
+				<pre><code class="language-typescript">...
+  <span class="hljs-keyword">const</span> post = <span class="hljs-keyword">new</span> Post();
+  post.id = <span class="hljs-string">'post-1'</span>; <span class="hljs-comment">// id is required.</span>
+  post.title = <span class="hljs-string">'Untitled'</span>;
+  <span class="hljs-keyword">let</span> savedPost : Post;
+  Collection(Post).update(post).then(<span class="hljs-function">(<span class="hljs-params">_savedPost : Post</span>) =&gt;</span> {
+    savedPost = _savedPost;
+  });
+...</code></pre>
+				<a href="#removing-documents" id="removing-documents" style="color: inherit; text-decoration: none;">
+					<h5>Removing documents</h5>
+				</a>
+				<pre><code class="language-typescript">...
+  Collection(Post).remove(<span class="hljs-string">'post-id'</span>).then(...);
+...</code></pre>
+				<a href="#6-formatting-data" id="6-formatting-data" style="color: inherit; text-decoration: none;">
+					<h4>6. Formatting data</h4>
+				</a>
+				<p>An instance of entity maybe contain properties such as subcollections which you do not wish to include if, for example, you are building a REST API. Calling the <code>toData()</code> method on an instance of an entity will produce a plain JSON object containing just primitive data, nested JSON objects, and document reference which have already been retrieved using the <code>.get()</code> method. For example:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Collection } <span class="hljs-keyword">from</span> <span class="hljs-string">'firebase-firestorm'</span>;
+<span class="hljs-keyword">import</span> Author <span class="hljs-keyword">from</span> <span class="hljs-string">'./Author'</span>;
+<span class="hljs-keyword">import</span> Post <span class="hljs-keyword">from</span> <span class="hljs-string">'./Post'</span>;
+
+Collection(Post).get(<span class="hljs-string">'post-1'</span>).then(<span class="hljs-function">(<span class="hljs-params">post: Post</span>) =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(post.toData());
+  <span class="hljs-comment">/*
+  Output:
+  {
+    id: ...,
+    title: ...,
+    content: ...
+  }
+  */</span>
+ post.author.get().then(<span class="hljs-function">(<span class="hljs-params">author: Author</span>) =&gt;</span> {
+   <span class="hljs-built_in">console</span>.log(post.toData());
+   <span class="hljs-comment">/*
+    Output:
+    {
+      id: ...,
+      title: ...,
+      content: ...,
+      author: {
+        id: ...,
+        name: ...
+      }
+    }
+   */</span>
+ });
+});
+</code></pre>
+				<a href="#custom-data-types" id="custom-data-types" style="color: inherit; text-decoration: none;">
+					<h3>Custom Data Types</h3>
+				</a>
+				<a href="#arrays" id="arrays" style="color: inherit; text-decoration: none;">
+					<h4>Arrays</h4>
+				</a>
+				<p>Firestore documents can contain arrays of strings, numbers, objects, etc. Defining arrays in Firestorm is as simple as assigning properties as array types in your <code>Entity</code> files. For example:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">class</span> Example <span class="hljs-keyword">extends</span> Entity {
+  <span class="hljs-meta">@field</span>({ name: <span class="hljs-string">'example_property_1'</span> })
+  property1!: <span class="hljs-built_in">string</span>[];
+
+  <span class="hljs-meta">@field</span>({ name: <span class="hljs-string">'example_property_2'</span> })
+  property2!: IDocumentRef&lt;AnotherEntity&gt;[];
+}</code></pre>
+				<a href="#nested-data" id="nested-data" style="color: inherit; text-decoration: none;">
+					<h4>Nested Data</h4>
+				</a>
+				<p>Firestore documents can contains nested objects (or maps). For a nested object, you need to create a new class to represent that object, and add a property with that class in your <code>Entity</code>, wrapped
+				with the <code>@map</code> decorator.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">class</span> Example <span class="hljs-keyword">extends</span> Entity {
+  <span class="hljs-meta">@map</span>({ name: <span class="hljs-string">'nested_object'</span> })
+  nestedObject!: Nested;
+}
+
+<span class="hljs-keyword">class</span> Nested {
+  <span class="hljs-meta">@field</span>({ name: <span class="hljs-string">'nested_property'</span> })
+  nestedProperty!: <span class="hljs-built_in">string</span>;
+}</code></pre>
+				<p>And then to use this entity:</p>
+				<pre><code class="language-typescript">...
+<span class="hljs-keyword">const</span> nested = <span class="hljs-keyword">new</span> Nested();
+nested.nestedProperty = <span class="hljs-string">'test'</span>;
+<span class="hljs-keyword">const</span> example = <span class="hljs-keyword">new</span> Example();
+example.nestedObject = nested;
+...</code></pre>
+				<a href="#geopoints" id="geopoints" style="color: inherit; text-decoration: none;">
+					<h4>Geopoints</h4>
+				</a>
+				<p>Geopoints store locational data and can be used a field. We have a wrapper class for firestore&#39;s GeoPoint which basically serves the same functionality.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">class</span> Example <span class="hljs-keyword">extends</span> Entity {
+  <span class="hljs-meta">@geopoint</span>({
+    name: <span class="hljs-string">'geopoint_property'</span>,
+  })
+  geopoint!: IGeoPoint;
+} </code></pre>
+				<p>And then to assign a GeoPoint:</p>
+				<pre><code class="language-typescript">...
+  <span class="hljs-keyword">const</span> example = <span class="hljs-keyword">new</span> Example();
+  example.geopoint = <span class="hljs-keyword">new</span> Geopoint(latitude, longitude);
+...</code></pre>
+				<a href="#timestamps" id="timestamps" style="color: inherit; text-decoration: none;">
+					<h4>Timestamps</h4>
+				</a>
+				<p>You can represent date &amp; time data in your <code>Entity</code> files. Like geopoints, our timestamp representation is essentially a wrapper of firestore&#39;s. You can set the options for the field to <code>updateOnWrite</code> which uses the server timestamp when creating or updating documents, or <code>updateOnCreate</code> or <code>updateOnUpdate</code>.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">class</span> Example <span class="hljs-keyword">extends</span> Entity {
+  <span class="hljs-meta">@timestamp</span>({
+    name: <span class="hljs-string">'timestamp_property'</span>,
+    updateOnWrite: <span class="hljs-literal">true</span>,
+  })
+  timestamp!: ITimestamp;
+}</code></pre>
+				<a href="#initialization-options" id="initialization-options" style="color: inherit; text-decoration: none;">
+					<h3>Initialization Options</h3>
+				</a>
+				<p><code>firestorm.intialize({ ...opts : IFireormConfig })</code> can be called with the following options:</p>
+				<table>
+					<thead>
+						<tr>
+							<th>Option</th>
+							<th>Description</th>
+							<th>Type</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td><code>fieldConversion</code></td>
+							<td>Providing this option will convert <code>Entity</code> propertity names into firestore collection names so you don&#39;t need to provide the <code>name</code> option in <code>@field()</code> decorators. To view available values please check out the docs.</td>
+							<td><code>enum FieldConversionType</code></td>
+						</tr>
+				</tbody></table>
+				<a href="#important-gotcha39s" id="important-gotcha39s" style="color: inherit; text-decoration: none;">
+					<h2>Important Gotcha&#39;s</h2>
+				</a>
+				<ul>
+					<li>All files for root collections, subcollections and nested maps must have a unique class name due to the way the metadata storage hooks everything up. We&#39;re currently looking for a way to resolve this issue.</li>
+					<li>Make sure fields such as geopoints, timestamps and document reference&#39;s have the <code>I</code> infront of the type, e.g. <code>IDocumentRef</code>, <code>ITimestamp</code>, <code>IGeoPoint</code>. </li>
+				</ul>
+				<a href="#limitations" id="limitations" style="color: inherit; text-decoration: none;">
+					<h2>Limitations</h2>
+				</a>
+				<ul>
+					<li>Listening to document updates using snapshots is currently unsupported.</li>
+					<li>Transactions and batched writes are currently unsupported.</li>
+					<li>Offline persitences is unsupported.</li>
+				</ul>
+				<p>If you would like to help resolve these issues, feel free to make a a <a href="#pull-requests">pull request</a>.</p>
+				<a href="#development" id="development" style="color: inherit; text-decoration: none;">
+					<h2>Development</h2>
+				</a>
+				<a href="#setup" id="setup" style="color: inherit; text-decoration: none;">
+					<h3>Setup</h3>
+				</a>
+				<ol>
+					<li>Clone the rpeo</li>
+					<li>Install dependencies<pre><code class="language-bash">$ <span class="hljs-built_in">cd</span> firebase-firestorm
+$ npm install</code></pre>
+					</li>
+				</ol>
+				<a href="#testing" id="testing" style="color: inherit; text-decoration: none;">
+					<h3>Testing</h3>
+				</a>
+				<p>The testing script looks for <code>*.spec.ts</code> files in the <code>src</code> and <code>test</code> directory.</p>
+				<pre><code class="language-bash">$ npm <span class="hljs-built_in">test</span></code></pre>
+				<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
+					<h2>Contributing</h2>
+				</a>
+				<a href="#found-a-bug" id="found-a-bug" style="color: inherit; text-decoration: none;">
+					<h3>Found a bug?</h3>
+				</a>
+				<p>Please report any bugs you have found submitting an issue to our Github repository, after ensuring the issue doesn&#39;t already exist.  Alternatively, you can make a pull request with a fix.</p>
+				<a href="#pull-requests" id="pull-requests" style="color: inherit; text-decoration: none;">
+					<h3>Pull Requests</h3>
+				</a>
+				<p>If you would like to help add or a feature or fix a bug, you can do so by making a pull request. The project uses <a href="https://www.conventionalcommits.org">Conventional Commits</a>, so please make sure you follow the spec when making PRs. You must also include relevant tests.</p>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<p><a href="license.md">MIT</a></p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-enum">
+						<a href="enums/fieldconversiontype.html" class="tsd-kind-icon">Field<wbr>Conversion<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/fieldtypes.html" class="tsd-kind-icon">Field<wbr>Types</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/writetypes.html" class="tsd-kind-icon">Write<wbr>Types</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/caseconverter.html" class="tsd-kind-icon">Case<wbr>Converter</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-not-exported">
+						<a href="classes/collection.html" class="tsd-kind-icon">Collection</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-not-exported">
+						<a href="classes/documentref.html" class="tsd-kind-icon">Document<wbr>Ref</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/entity.html" class="tsd-kind-icon">Entity</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/fieldutils.html" class="tsd-kind-icon">Field<wbr>Utils</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/firestoreserializer.html" class="tsd-kind-icon">Firestore<wbr>Serializer</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/geopoint.html" class="tsd-kind-icon">Geo<wbr>Point</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/querybuilder.html" class="tsd-kind-icon">Query<wbr>Builder</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/timestamp.html" class="tsd-kind-icon">Timestamp</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/icollection.html" class="tsd-kind-icon">ICollection</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/icollectionconfig.html" class="tsd-kind-icon">ICollection<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/icollectionquery.html" class="tsd-kind-icon">ICollection<wbr>Query</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/idocumentref.html" class="tsd-kind-icon">IDocument<wbr>Ref</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/idocumentrefconfig.html" class="tsd-kind-icon">IDocument<wbr>Ref<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/idocumentrefmeta.html" class="tsd-kind-icon">IDocument<wbr>Ref<wbr>Meta</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ientity.html" class="tsd-kind-icon">IEntity</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ifieldconfig.html" class="tsd-kind-icon">IField<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ifieldmapconfig.html" class="tsd-kind-icon">IField<wbr>Map<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ifieldmapmeta.html" class="tsd-kind-icon">IField<wbr>Map<wbr>Meta</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ifieldmeta.html" class="tsd-kind-icon">IField<wbr>Meta</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ifieldwithentityconfig.html" class="tsd-kind-icon">IField<wbr>With<wbr>Entity<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ifieldwithentitymeta.html" class="tsd-kind-icon">IField<wbr>With<wbr>Entity<wbr>Meta</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ifireormconfig.html" class="tsd-kind-icon">IFireorm<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/igeopoint.html" class="tsd-kind-icon">IGeo<wbr>Point</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/igeopointconfig.html" class="tsd-kind-icon">IGeo<wbr>Point<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/igeopointmeta.html" class="tsd-kind-icon">IGeo<wbr>Point<wbr>Meta</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/irepository.html" class="tsd-kind-icon">IRepository</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="interfaces/iserializedresult.html" class="tsd-kind-icon">ISerialized<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/istore.html" class="tsd-kind-icon">IStore</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/isubcollectionconfig.html" class="tsd-kind-icon">ISub<wbr>Collection<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/itimestamp.html" class="tsd-kind-icon">ITimestamp</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/itimestampconfig.html" class="tsd-kind-icon">ITimestamp<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/itimestampmeta.html" class="tsd-kind-icon">ITimestamp<wbr>Meta</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-not-exported">
+						<a href="globals.html#endatquery" class="tsd-kind-icon">End<wbr>AtQuery</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-not-exported">
+						<a href="globals.html#endbeforequery" class="tsd-kind-icon">End<wbr>Before<wbr>Query</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-not-exported">
+						<a href="globals.html#orderbyquery" class="tsd-kind-icon">Order<wbr>ByQuery</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-not-exported">
+						<a href="globals.html#startafterquery" class="tsd-kind-icon">Start<wbr>After<wbr>Query</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-not-exported">
+						<a href="globals.html#startatquery" class="tsd-kind-icon">Start<wbr>AtQuery</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-not-exported">
+						<a href="globals.html#wherequery" class="tsd-kind-icon">Where<wbr>Query</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#default" class="tsd-kind-icon">default</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#deserialize" class="tsd-kind-icon">deserialize</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#destroy" class="tsd-kind-icon">destroy</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#getorcreaterepository" class="tsd-kind-icon">get<wbr>OrCreate<wbr>Repository</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#getrepository" class="tsd-kind-icon">get<wbr>Repository</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#initialize" class="tsd-kind-icon">initialize</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#serialize" class="tsd-kind-icon">serialize</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#todata" class="tsd-kind-icon">to<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#store" class="tsd-kind-icon">store</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
