@@ -1,8 +1,8 @@
 {
   "name": "firebase-firestorm",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "A firestore ORM for Typescript",
-  "main": "/lib/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "tsc",
     "test": "GOOGLE_APPLICATION_CREDENTIALS='service-account.json' nyc mocha -r ts-node/register test/**/*.spec.ts",
