@@ -8,7 +8,7 @@ import {
   FieldConversionType,
 } from './types';
 
-let store : IStore  = {
+let store: IStore  = {
   repositories: new Map<string, IRepository>(),
   config: {
     fieldConversion: FieldConversionType.NoConversion,
@@ -20,10 +20,10 @@ let store : IStore  = {
  * @param firestore A firestore instance.
  * @param config Configuration options for firestorm.
  */
-export const initialize = (firestore : Firestore, config?: IFireormConfig) => {
+export const initialize = (firestore: Firestore, config?: IFireormConfig): void => {
   store.firestore = firestore;
   if (config) {
-    (Object.keys(config) as (keyof IFireormConfig)[]).forEach(key => {
+    (Object.keys(config) as (keyof IFireormConfig)[]).forEach((key): void => {
       store.config[key] = config[key];
     });
   }
@@ -32,7 +32,7 @@ export const initialize = (firestore : Firestore, config?: IFireormConfig) => {
 /**
  * Resets the store
  */
-export const destroy = () => {
+export const destroy = (): void => {
   store = {
     repositories: store.repositories,
     firestore: undefined,
@@ -46,7 +46,7 @@ export const destroy = () => {
  * Gets a repository with a given name
  * @param key The name of the [[Entity]] class
  */
-export const getRepository = (key : string) => {
+export const getRepository = (key: string): IRepository => {
   if (store.repositories.has(key)) {
     return store.repositories.get(key) as IRepository;
   }
@@ -58,10 +58,10 @@ export const getRepository = (key : string) => {
  * exist, and returns the repository.
  * @param key The name of the [[Entity]] class
  */
-export const getOrCreateRepository = (key : string) => {
+export const getOrCreateRepository = (key: string): IRepository => {
   if (!store.repositories.has(key)) {
     store.repositories.set(key, {
-      collectionConfig: {} as ICollectionConfig,
+      collectionConfig: {} as unknown as ICollectionConfig,
       fields: new Map<string, IFieldMeta>(),
       subcollections: new Map<string, IRepository>(),
     });
@@ -69,4 +69,4 @@ export const getOrCreateRepository = (key : string) => {
   return getRepository(key);
 };
 
-export default () => store;
+export default (): IStore => store;

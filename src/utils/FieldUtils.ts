@@ -1,7 +1,6 @@
 import store from '../store';
 import { IFieldMeta, IFieldConfig, FieldTypes, FieldConversionType } from '../types';
 import { CaseConverter } from '.';
-import { field } from '../decorators';
 
 /**
  * Utility functions for fields.
@@ -16,11 +15,11 @@ export default class FieldUtils {
    * @returns The configured field.
    */
   public static configure<T>(
-    fieldConfig : IFieldConfig,
+    fieldConfig: IFieldConfig,
     property: string,
     type: T,
-    fieldType : FieldTypes,
-  ) : IFieldMeta {
+    fieldType: FieldTypes,
+  ): IFieldMeta {
     const { config } = store();
     let name = '';
     // Providing a field name in the config overrides an conversions.
@@ -46,9 +45,9 @@ export default class FieldUtils {
       name,
       type: fieldType,
       isArray: Array.isArray(type),
-      deserialize: function () { return null; },
-      serialize: function () { return null; },
-      toData: function() { return null; },
+      deserialize: function (): null { return null; },
+      serialize: function (): null { return null; },
+      toData: function(): null { return null; },
     };
   };
 
@@ -61,8 +60,8 @@ export default class FieldUtils {
   public static process<T>(
     isArray: boolean,
     fieldValue: T | T[],
-    processSingle: ((singleValue: T, ...values : any) => any),
-  ) : any {
+    processSingle: ((singleValue: T, ...values: any) => any),
+  ): any {
     if (isArray) {
       return (fieldValue as T[]).map(processSingle);
     } else {

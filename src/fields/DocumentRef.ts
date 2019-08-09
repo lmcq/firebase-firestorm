@@ -10,12 +10,12 @@ import { getRepository } from '../store';
  * @typeparam T The entity for the document reference.
  */
 class DocumentRef <T extends Entity> implements IDocumentRef<T> {
-  private _id : string;
-  private _model : new () => T;
-  private _native : firestore.DocumentReference;
-  private _path : string;
-  private _parent : ICollection<T>;
-  private _cachedDocument : T | null;
+  private _id: string;
+  private _model: new () => T;
+  private _native: firestore.DocumentReference;
+  private _path: string;
+  private _parent: ICollection<T>;
+  private _cachedDocument: T | null;
 
   /**
    * Create a document reference using a document ID,
@@ -24,10 +24,10 @@ class DocumentRef <T extends Entity> implements IDocumentRef<T> {
    * @param model The entity class for the document.
    * @param parent The parent collection.
    */
-  constructor(
+  public constructor(
     id: string,
-    model : new () => T,
-    parent : ICollection<T>,
+    model: new () => T,
+    parent: ICollection<T>,
   ) {
     this._id = id;
     this._cachedDocument = null;
@@ -40,14 +40,14 @@ class DocumentRef <T extends Entity> implements IDocumentRef<T> {
   /**
    * Get the document ID.
    */
-  get id() {
+  public get id(): string {
     return this._id;
   }
 
   /**
    * Get the cached document data.
    */
-  get cached() {
+  public get cached(): T | null {
     if (!this._cachedDocument) {
       throw new Error('Can not fetch cached document reference, call get() first.');
     }
@@ -57,42 +57,42 @@ class DocumentRef <T extends Entity> implements IDocumentRef<T> {
   /**
    * Get the path to the document.
    */
-  get path() {
+  public get path(): string {
     return this._path;
   }
 
   /**
    * Get the parent collection.
    */
-  get parent() {
+  public get parent(): ICollection<T> {
     return this._parent;
   }
 
   /**
    * Get the firestore document reference.
    */
-  get native() {
+  public get native(): firestore.DocumentReference {
     return this._native;
   }
 
   /**
    * Append the document ID to the path.
    */
-  private buildPath() : string {
+  private buildPath(): string {
     return `${this._parent.path}/${this._id}`;
   }
 
   /**
    * Get the firestore document reference from the path.
    */
-  private buildNative() : firestore.DocumentReference {
+  private buildNative(): firestore.DocumentReference {
     return this._parent.native.doc(this._id);
   }
 
   /**
    * Gets the data from the document reference.
    */
-  public async get() : Promise<T> {
+  public async get(): Promise<T> {
     if (this._cachedDocument === null) {
       const snapshot = await this._native.get();
       this._cachedDocument = FirestoreSerializer.deserialize(snapshot, this._model, this.parent);
@@ -103,7 +103,7 @@ class DocumentRef <T extends Entity> implements IDocumentRef<T> {
   /**
    * Returns whether we have already fetched the document data.
    */
-  public isFetched() : boolean {
+  public isFetched(): boolean {
     return this._cachedDocument !== null;
   }
 
@@ -111,7 +111,7 @@ class DocumentRef <T extends Entity> implements IDocumentRef<T> {
    * Get a subcollection for a document.
    * @param collectionModel The entity for the collection.
    */
-  public collection <C extends Entity> (collectionModel : new () => C) : ICollection<C> {
+  public collection <C extends Entity> (collectionModel: new () => C): ICollection<C> {
     const childRepository = getRepository(collectionModel.prototype.constructor.name);
     const currentSubcollections = getRepository(this._model.prototype.constructor.name).subcollections;
     const collectionExists = currentSubcollections.has(childRepository.collectionConfig.name);
@@ -127,7 +127,7 @@ class DocumentRef <T extends Entity> implements IDocumentRef<T> {
  */
 export default <T extends Entity> (
   id: string,
-  model : new () => T,
-  parent : ICollection<T>,
-) : IDocumentRef<T> => new DocumentRef(id, model, parent);
+  model: new () => T,
+  parent: ICollection<T>,
+): IDocumentRef<T> => new DocumentRef(id, model, parent);
 

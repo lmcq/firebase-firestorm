@@ -18,7 +18,7 @@ class Collection <T extends Entity, P extends Entity> implements ICollection<T, 
   /**
    * @hidden
    */
-  private _native : firestore.CollectionReference;
+  private _native: firestore.CollectionReference;
   /**
    * @hidden
    */
@@ -33,7 +33,7 @@ class Collection <T extends Entity, P extends Entity> implements ICollection<T, 
    * @param E The entity class for the collections documents. 
    * @param parent The parent document for the collection. 
    */
-  constructor(E: new () => T, parent? : IDocumentRef<P>) {
+  public constructor(E: new () => T, parent? : IDocumentRef<P>) {
     this._Entity = E;
     this._parent = parent || null;
     this._path = this.buildPath();
@@ -43,21 +43,21 @@ class Collection <T extends Entity, P extends Entity> implements ICollection<T, 
   /**
    * The path to this collection.
    */
-  get path() {
+  public get path(): string {
     return this._path;
   }
 
   /**
    * The parent document reference for the collection.
    */
-  get parent() {
+  public get parent(): IDocumentRef<P> | null {
     return this._parent;
   }
 
   /**
    * The native firestore collection reference.
    */
-  get native() {
+  public get native(): firestore.CollectionReference {
     return this._native;
   }
 
@@ -65,11 +65,11 @@ class Collection <T extends Entity, P extends Entity> implements ICollection<T, 
    * @hidden
    * Creates the path to the collection.
    */
-  private buildPath() : string {
+  private buildPath(): string {
     const { name : collectionName } = getRepository(this._Entity.prototype.constructor.name).collectionConfig;
     let p = `/${collectionName}`;
     if (this._parent) {
-     p = `${this._parent.path}${p}`;
+      p = `${this._parent.path}${p}`;
     }
     return p;
   }
@@ -78,7 +78,7 @@ class Collection <T extends Entity, P extends Entity> implements ICollection<T, 
    * @hidden
    * Creates the native firestore reference.
    */
-  private buildNative() : firestore.CollectionReference {
+  private buildNative(): firestore.CollectionReference {
     const { firestore } = store();
     if (firestore) {
       return firestore.collection(this._path);
@@ -91,7 +91,7 @@ class Collection <T extends Entity, P extends Entity> implements ICollection<T, 
    * Gets a document reference from the collection.
    * @param id The document ID.
    */
-  public doc(id : string) : IDocumentRef<T> {
+  public doc(id: string): IDocumentRef<T> {
     return DocumentRef(id, this._Entity, this);
   }
 
@@ -115,7 +115,7 @@ class Collection <T extends Entity, P extends Entity> implements ICollection<T, 
    * 
    * @returns The updated entity.
    */
-  public async update(entity : T) : Promise<T | null> {
+  public async update(entity: T): Promise<T | null> {
     if (!entity.id) {
       throw new Error(`An ID must be provided when updating ${entity.constructor.name}`);
     }
@@ -130,7 +130,7 @@ class Collection <T extends Entity, P extends Entity> implements ICollection<T, 
    * 
    * @returns The created entity.
    */
-  public async create(entity : T) : Promise<T | null> {
+  public async create(entity: T): Promise<T | null> {
     const { id, ...data } = FirestoreSerializer.serialize(entity, WriteTypes.Create);
     if (id) {
       await this._native.doc(id).set(data);
@@ -147,14 +147,14 @@ class Collection <T extends Entity, P extends Entity> implements ICollection<T, 
    * 
    * @returns A list of entities matching the criteria.
    */
-  public async find(query? : ICollectionQuery<T>) : Promise<T[]> {
-    let querySnapshot : firestore.QuerySnapshot;
+  public async find(query? : ICollectionQuery<T>): Promise<T[]> {
+    let querySnapshot: firestore.QuerySnapshot;
     if (query) {
       querySnapshot = await QueryBuilder.query(this, query).get();
     } else {
       querySnapshot = await this._native.get();
     }
-    return querySnapshot.docs.map((snapshot) => {
+    return querySnapshot.docs.map((snapshot): T => {
       return FirestoreSerializer.deserialize(snapshot, this._Entity, this) as T;
     });
   }
@@ -163,7 +163,7 @@ class Collection <T extends Entity, P extends Entity> implements ICollection<T, 
    * Removes a document from the collection.
    * @param id The document ID to remove.
    */
-  public async remove(id : string) : Promise<void> {
+  public async remove(id: string): Promise<void> {
     await this._native.doc(id).delete();
   }
 }
@@ -175,4 +175,4 @@ class Collection <T extends Entity, P extends Entity> implements ICollection<T, 
 export default <T extends Entity, P extends Entity> (
   model: new () => T,
   parent? : IDocumentRef<P>,
-) : ICollection<T, P> => new Collection<T, P>(model, parent);
+): ICollection<T, P> => new Collection<T, P>(model, parent);

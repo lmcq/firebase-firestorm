@@ -1,5 +1,5 @@
 import * as firestore from '@google-cloud/firestore';
-import { IEntity, FieldTypes, ITimestampConfig, WriteTypes, ITimestampMeta } from '../types';
+import { FieldTypes, ITimestampConfig, WriteTypes, ITimestampMeta } from '../types';
 import FieldUtils from '../utils/FieldUtils';
 import { getOrCreateRepository } from '../store';
 import { Timestamp } from '../fields';
@@ -20,17 +20,23 @@ const serialize = (
   updateOnUpdate: boolean,
   writeType: WriteTypes,
   value: Timestamp | Timestamp[]
-) => FieldUtils.process(isArray, value, (v: Timestamp) => {
-  const isAutoWriteCondition = writeType === WriteTypes.Create && (updateOnWrite || updateOnCreate);
-  const isAutoUpdateConfition = writeType === WriteTypes.Update && (updateOnWrite || updateOnUpdate);
-  if (isAutoWriteCondition || isAutoUpdateConfition) {
-    return firestore.FieldValue.serverTimestamp();
-  } else if (v && v.native) {
-    return v.native;
-  } else {
-    return undefined;
-  }
-});
+): firestore.Timestamp | firestore.Timestamp[] | firestore.FieldValue | firestore.FieldValue[] => {
+  return FieldUtils.process(
+    isArray,
+    value,
+    (v: Timestamp): firestore.Timestamp | firestore.FieldValue | undefined => {
+      const isAutoWriteCondition = writeType === WriteTypes.Create && (updateOnWrite || updateOnCreate);
+      const isAutoUpdateConfition = writeType === WriteTypes.Update && (updateOnWrite || updateOnUpdate);
+      if (isAutoWriteCondition || isAutoUpdateConfition) {
+        return firestore.FieldValue.serverTimestamp();
+      } else if (v && v.native) {
+        return v.native;
+      } else {
+        return undefined;
+      }
+    },
+  );
+}
 
 /**
  * Deserializes a firestore timestamp into a firestorm timestamp.
@@ -40,12 +46,18 @@ const serialize = (
 const deserialize = (
   isArray: boolean,
   value: firestore.Timestamp | firestore.Timestamp[],
-) => FieldUtils.process(isArray, value, (v: firestore.Timestamp) => {
-  return new Timestamp(
-    v.seconds,
-    v.nanoseconds,
+): Timestamp | Timestamp[] => {
+  return FieldUtils.process(
+    isArray,
+    value,
+    (v: firestore.Timestamp): Timestamp => {
+      return new Timestamp(
+        v.seconds,
+        v.nanoseconds,
+      );
+    }
   );
-});
+};
 
 /**
  * Converts a firestorm timestamp into a string representation.
@@ -57,10 +69,17 @@ const toData = (
   isArray: boolean,
   format: ((date: Date) => string),
   value: Timestamp | Timestamp[],
-) => FieldUtils.process(isArray, value, (v: Timestamp) => format(v.toDate()));
+): string | string[] => {
+  return FieldUtils.process(
+    isArray,
+    value,
+    (v: Timestamp): string => format(v.toDate()),
+  );
+};
 
-export default function (fieldConfig: ITimestampConfig) {
-  return function (target: any, key: string) {
+export default function (fieldConfig: ITimestampConfig): Function {
+  return function (target: any, key: string): void {
+    // Configure the field.
     const type = Reflect.getMetadata('design:type', target, key);
     const field = FieldUtils.configure(
       fieldConfig,
@@ -71,11 +90,15 @@ export default function (fieldConfig: ITimestampConfig) {
     field.updateOnWrite = fieldConfig.updateOnWrite || false;
     field.updateOnCreate = fieldConfig.updateOnCreate || false;
     field.updateOnUpdate = fieldConfig.updateOnUpdate || false;
-    field.format = fieldConfig.format || ((date: Date) => date.toLocaleString());
-    field.deserialize = (value: firestore.Timestamp | firestore.Timestamp[]) => {
+    field.format = fieldConfig.format || ((date: Date): string => date.toLocaleString());
+    field.deserialize = (value: firestore.Timestamp | firestore.Timestamp[]): Timestamp | Timestamp[] => {
       return deserialize(field.isArray, value);
     };
-    field.serialize = (value: Timestamp | Timestamp[], writeType: WriteTypes) => {
+    // Serialization Functions.
+    field.serialize = (
+      value: Timestamp | Timestamp[],
+      writeType: WriteTypes,
+    ): firestore.Timestamp | firestore.Timestamp[] | firestore.FieldValue | firestore.FieldValue[] => {
       return serialize(
         field.isArray,
         field.updateOnWrite,
@@ -85,13 +108,14 @@ export default function (fieldConfig: ITimestampConfig) {
         value,
       );
     };
-    field.toData = (value: Timestamp | Timestamp[]) => {
+    field.toData = (value: Timestamp | Timestamp[]): string | string[] => {
       return toData(
         field.isArray,
         field.format,
         value,
       );
     };
+    // Register the timestamp field.
     const repository = getOrCreateRepository(target.constructor.name);
     repository.fields.set(key, field);
   };

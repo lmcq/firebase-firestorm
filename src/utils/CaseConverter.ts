@@ -40,7 +40,7 @@ export default class CaseConverter {
     if (str.length) {
       str = str.charAt(0).toLowerCase() + str.slice(1);
     }
-    return str.replace(/([-_][a-z])/ig, (fst) => {
+    return str.replace(/([-_][a-z])/ig, (fst): string => {
       return fst.toUpperCase()
         .replace('-', '')
         .replace('_', '');

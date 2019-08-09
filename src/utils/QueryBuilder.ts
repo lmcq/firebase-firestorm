@@ -10,7 +10,7 @@ export default class QueryBuilder {
    * @param collectionRef The native firestore collection reference.
    * @param query The firestorm query
    */
-  public static query<T extends IEntity>(collection: ICollection<T>, query: ICollectionQuery<T>) : firestore.Query {
+  public static query<T extends IEntity>(collection: ICollection<T>, query: ICollectionQuery<T>): firestore.Query {
     const collectionRef = collection.native;
     const {
       where: whereQueries,
@@ -21,13 +21,13 @@ export default class QueryBuilder {
       endBefore: endBeforeQuery,
       limit: limitQuery,
     } = query;
-    let q = (whereQueries || []).reduce((accum: any, curr) => {
+    let q = (whereQueries || []).reduce((accum: any, curr): firestore.Query  => {
       const [field, operator, value] = curr;
-      return accum.where(field as any, operator, value);
+      return accum.where(field, operator, value);
     }, collectionRef);
 
     if (orderByQueries) {
-      orderByQueries.forEach(obq => {
+      orderByQueries.forEach((obq): void => {
         q = q.orderBy(obq[0], obq[1] || 'asc');
       });
       if (startAtQuery || startAfterQuery) {

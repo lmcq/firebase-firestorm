@@ -5,8 +5,8 @@ import { getOrCreateRepository } from '../store';
  * Registers a subcollection with firestorm.
  * @param config The subcollection configuration.
  */
-export default (config : ISubCollectionConfig) => {
-  return (target : IEntity, key: string) => {
+export default (config: ISubCollectionConfig): Function => {
+  return (target: IEntity, key: string): void => {
     // Get the parent based on the Entity class.
     const parentRepository = getOrCreateRepository(target.constructor.name);
     const { entity, name } = config;

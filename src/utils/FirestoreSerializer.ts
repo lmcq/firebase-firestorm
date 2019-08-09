@@ -22,7 +22,7 @@ export default class FirestoreSerializer {
     const { fields } = getRepository(entity.constructor.name);
     const serialized: ISerializedResult = {};
     serialized.id = entity.id;
-    fields.forEach((value, key) => {
+    fields.forEach((value, key): void => {
       const k = key as keyof T;
       if (entity[k] || value.type === FieldTypes.Timestamp) {
         serialized[key] = value.serialize(entity[k], writeType);
@@ -45,14 +45,14 @@ export default class FirestoreSerializer {
     deserialized.ref = ref;
     const docData = doc.data() as any;
     // Deserialize each of the registered fields.
-    fields.forEach((value, key) => {
+    fields.forEach((value, key): void => {
       if (docData[value.name]) {
         let k = key as keyof T;
         deserialized[k] = value.deserialize(docData[value.name]);
       }
     });
     // Create collection references for registered subcollections.
-    subcollections.forEach((value, key) => {
+    subcollections.forEach((value, key): void => {
       if (value.entity) {
         let k = key as keyof T;
         deserialized[k] = Collection(value.entity, ref);

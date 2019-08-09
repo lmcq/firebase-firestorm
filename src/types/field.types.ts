@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-interface */
 import * as firestore from '@google-cloud/firestore';
 import { FieldTypes } from './enum.types';
 import { ICollection, IEntity } from './collection.types';
@@ -29,14 +30,14 @@ export interface IFieldWithEntityMeta extends IFieldMeta {
 // Document References
 
 export interface IDocumentRef <T extends IEntity> {
-  id : string;
-  cached : T;
-  native : firestore.DocumentReference;
+  id: string;
+  cached: T | null;
+  native: firestore.DocumentReference;
   path: string;
-  parent : ICollection<T>;
-  isFetched() : boolean;
-  get() : Promise<T>;
-  collection<C extends IEntity>(coll : new () => C) : ICollection<C>;
+  parent: ICollection<T>;
+  isFetched(): boolean;
+  get(): Promise<T>;
+  collection<C extends IEntity>(coll: new () => C): ICollection<C>;
 }
 
 export interface IDocumentRefConfig extends IFieldWithEntityConfig {
@@ -51,7 +52,7 @@ export interface IGeoPoint {
   latitude: number;
   longitude: number;
   native: firestore.GeoPoint;
-  isEqual: (other : IGeoPoint) => boolean;
+  isEqual: (other: IGeoPoint) => boolean;
 }
 
 export interface IGeoPointConfig extends IFieldConfig {

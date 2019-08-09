@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "test": "GOOGLE_APPLICATION_CREDENTIALS='service-account.json' nyc mocha -r ts-node/register test/**/*.spec.ts",
-    "docs": "typedoc --excludeExternals --mode file --out docs src"
+    "docs": "typedoc --excludeExternals --mode file --out docs src",
+    "lint": "eslint src/**/*.ts"
   },
   "keywords": [
     "firestorm",
@@ -28,8 +29,11 @@
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "^7.1.0",
     "@types/mocha": "^5.2.7",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
+    "eslint": "^6.1.0",
     "mocha": "^6.2.0",
     "mock-cloud-firestore": "^0.9.3",
     "nyc": "^14.1.1",

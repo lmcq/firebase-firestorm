@@ -1,7 +1,7 @@
 import * as firestore from '@google-cloud/firestore';
 import { ICollectionConfig, ISubCollectionConfig, IEntity } from './collection.types';
 import { FieldConversionType } from './enum.types';
-import { IFieldMeta, IFieldMapMeta } from './field.types';
+import { IFieldMeta } from './field.types';
 
 export interface IStore {
   firestore?: firestore.Firestore;
@@ -14,7 +14,7 @@ export interface IFireormConfig {
 }
 
 export interface IRepository {
-  collectionConfig : ICollectionConfig | ISubCollectionConfig;
+  collectionConfig: ICollectionConfig | ISubCollectionConfig;
   entity?: new () => IEntity;
   parent?: IRepository;
   fields: Map<string, IFieldMeta>;

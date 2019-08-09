@@ -1,5 +1,5 @@
 import * as firestore from '@google-cloud/firestore';
-import { FieldTypes, IGeoPointConfig, IGeoPoint } from '../types';
+import { FieldTypes, IGeoPointConfig, IGeoPoint, GeoPointData } from '../types';
 import FieldUtils from '../utils/FieldUtils';
 import { getOrCreateRepository } from '../store';
 import { GeoPoint } from '..';
@@ -11,11 +11,13 @@ import { GeoPoint } from '..';
  */
 const deserialize = (
   isArray: boolean, value: firestore.GeoPoint | firestore.GeoPoint[],
-) => FieldUtils.process(
-  isArray,
-  value,
-  (v : firestore.GeoPoint) => new GeoPoint(v.latitude, v.longitude),
-);
+): IGeoPoint | IGeoPoint[] => {
+  return FieldUtils.process(
+    isArray,
+    value,
+    (v: firestore.GeoPoint): GeoPoint => new GeoPoint(v.latitude, v.longitude),
+  );
+};
 
 /**
  * Serializes our representation of a geopoint into a firestorm geopoint;
@@ -24,11 +26,13 @@ const deserialize = (
  */
 const serialize = (
   isArray: boolean, value: IGeoPoint | IGeoPoint[],
-) => FieldUtils.process(
-  isArray,
-  value,
-  (v : IGeoPoint) => v.native,
-);
+): firestore.GeoPoint | firestore.GeoPoint[] => {
+  return FieldUtils.process(
+    isArray,
+    value,
+    (v: IGeoPoint): firestore.GeoPoint => v.native,
+  );
+};
 
 /**
  * Converts our firestorm representation of geopoint to human-readable format.
@@ -37,10 +41,10 @@ const serialize = (
  */
 const toData = (
   isArray: boolean, value: IGeoPoint | IGeoPoint[],
-) => FieldUtils.process(
+): GeoPointData | GeoPointData[] => FieldUtils.process(
   isArray,
   value,
-  (v: IGeoPoint) => ({
+  (v: IGeoPoint): GeoPointData => ({
     latitude: v.latitude,
     longitude: v.longitude,
   }),
@@ -50,8 +54,8 @@ const toData = (
  * Registers a geopoint field.
  * @param fieldConfig The field configuration for the geopoint.
  */
-export default function (fieldConfig : IGeoPointConfig) {
-  return function(target: any, key: string) {
+export default function (fieldConfig: IGeoPointConfig): Function {
+  return function (target: any, key: string): void {
     const type = Reflect.getMetadata('design:type', target, key);
     // Process the field configuration.
     const field = FieldUtils.configure(
@@ -61,15 +65,21 @@ export default function (fieldConfig : IGeoPointConfig) {
       FieldTypes.GeoPoint,
     );
     // Serialization Functions
-    field.deserialize = (value: firestore.GeoPoint | firestore.GeoPoint[]) => deserialize(
+    field.deserialize = (
+      value: firestore.GeoPoint | firestore.GeoPoint[],
+    ): IGeoPoint | IGeoPoint[] => deserialize(
       field.isArray,
       value,
     );
-    field.serialize = (value: IGeoPoint | IGeoPoint[]) => serialize(
+    field.serialize = (
+      value: IGeoPoint | IGeoPoint[],
+    ): firestore.GeoPoint | firestore.GeoPoint[] => serialize(
       field.isArray,
       value,
     );
-    field.toData = (value: IGeoPoint | IGeoPoint[]) => toData(
+    field.toData = (
+      value: IGeoPoint | IGeoPoint[],
+    ): GeoPointData | GeoPointData[] => toData(
       field.isArray,
       value,
     );

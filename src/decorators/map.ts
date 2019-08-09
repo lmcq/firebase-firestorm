@@ -1,7 +1,6 @@
-import { IFieldConfig, FieldTypes, IFieldMeta, WriteTypes } from '../types';
+import { IFieldConfig, FieldTypes, IFieldMeta, WriteTypes, IEntity, FirestormData } from '../types';
 import FieldUtils from '../utils/FieldUtils';
 import { getOrCreateRepository } from '../store';
-import { isArray } from 'util';
 
 /**
  * Deserializes an object to a firestorm object.
@@ -11,22 +10,24 @@ import { isArray } from 'util';
  */
 const deserialize = (
   isArray: boolean,
-  value: Object | Object[],
+  value: Record<string, any> | Record<string, any>[],
   fields: Map<string, IFieldMeta>,
   Entity: new () => any, 
-) => FieldUtils.process(
-  isArray,
-  value,
-  (v: any) => {
-    const result = new Entity();
-    fields.forEach((value, key) => {
-      if (v[value.name]) {
-        result[key] = value.deserialize(v[value.name]);
-      }
-    });
-    return result;
-  },
-);
+): IEntity | IEntity[] => {
+  return FieldUtils.process(
+    isArray,
+    value,
+    (v: Record<string, any>): IEntity => {
+      const result = new Entity();
+      fields.forEach((value, key): void => {
+        if (v[value.name]) {
+          result[key] = value.deserialize(v[value.name]);
+        }
+      });
+      return result;
+    },
+  );
+};
 
 /**
  * Serializes an firestorm object into a firestore object;
@@ -37,23 +38,25 @@ const deserialize = (
  */
 const serialize = (
   isArray: boolean,
-  value: Object | Object[],
+  value: Record<string, any> | Record<string, any>[],
   fields: Map<string, IFieldMeta>,
   writeType: WriteTypes,
-) => FieldUtils.process(
-  isArray,
-  value,
-  (v: any) => {
-    const result = {} as any;
-    fields.forEach((value, key) => {
-      if (v[key] || value.type === FieldTypes.Timestamp) {
-        result[value.name] = value.serialize(v[key], writeType);
-        if (!result[value.name]) delete result[value.name];
-      }
-    });
-    return result;
-  },
-);
+): Record<string, any> | Record<string, any> => {
+  return FieldUtils.process(
+    isArray,
+    value,
+    (v: any): Record<string, any> => {
+      const result = {} as any;
+      fields.forEach((value, key): void => {
+        if (v[key] || value.type === FieldTypes.Timestamp) {
+          result[value.name] = value.serialize(v[key], writeType);
+          if (!result[value.name]) delete result[value.name];
+        }
+      });
+      return result;
+    },
+  );
+};
 
 /**
  * Converts our object to human-readable format.
@@ -63,25 +66,31 @@ const serialize = (
  */
 const toData = (
   isArray: boolean,
-  value: Object | Object[],
+  value: Record<string, any> | Record<string, any>[],
   fields: Map<string, IFieldMeta>,
-) => FieldUtils.process(
-  isArray,
-  value,
-  (v: any) => {
-    const result = {} as any;
-    fields.forEach((fieldConfig, key) => {
-      result[key] = fieldConfig.toData(v[key]);
-    });
-    Object.keys(result).forEach(key => {
-      result[key] === undefined ? delete result[key] : '';
-    });
-    return result;
-  }
-)
+): FirestormData | FirestormData[] => {
+  return FieldUtils.process(
+    isArray,
+    value,
+    (v: any): FirestormData => {
+      const result = {} as any;
+      fields.forEach((fieldConfig, key): void => {
+        result[key] = fieldConfig.toData(v[key]);
+      });
+      Object.keys(result).forEach((key): void => {
+        result[key] === undefined ? delete result[key] : '';
+      });
+      return result;
+    }
+  );
+};
 
-export default function (fieldConfig: IFieldConfig) {
-  return function (target: any, key: string) {
+/**
+ * Registers a new map with firestorm.
+ * @param fieldConfig The field configuration
+ */
+export default function (fieldConfig: IFieldConfig): Function {
+  return function (target: any, key: string): void {
     const type = Reflect.getMetadata('design:type', target, key);
     const field = FieldUtils.configure(
       fieldConfig,
@@ -92,13 +101,16 @@ export default function (fieldConfig: IFieldConfig) {
     repository.fields.set(key, field);
     const childRepository = getOrCreateRepository(type.name);
     childRepository.parent = repository;
-    field.serialize = (value: any, writeType: WriteTypes) => {
+    field.serialize = (
+      value: Record<string, any> | Record<string, any>[],
+      writeType: WriteTypes,
+    ): Record<string, any> | Record<string, any>[] => {
       return serialize(field.isArray, value, childRepository.fields, writeType);
     };
-    field.deserialize = (value: any) => {
+    field.deserialize = (value: any): Record<string, any> | Record<string, any>[] => {
       return deserialize(field.isArray, value, childRepository.fields, type);
     };
-    field.toData = (value: any) => {
+    field.toData = (value: any): FirestormData | FirestormData[] => {
       return toData(field.isArray, value, childRepository.fields);
     }
   };

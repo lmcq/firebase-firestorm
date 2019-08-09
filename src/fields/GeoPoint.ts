@@ -6,25 +6,25 @@ import { IGeoPoint } from '../types';
  * imports clean when using the library.
  */
 export default class GeoPoint implements IGeoPoint {
-  private _native : firestore.GeoPoint;
+  private _native: firestore.GeoPoint;
 
-  constructor(latitude: number, longitude: number) {
+  public constructor(latitude: number, longitude: number) {
     this._native = new firestore.GeoPoint(latitude, longitude);
   }
 
-  public get native() {
+  public get native(): firestore.GeoPoint {
     return this._native;
   }
 
-  public get latitude() {
+  public get latitude(): number {
     return this._native.latitude;
   }
 
-  public set latitude(value : number) {
+  public set latitude(value: number) {
     this._native = new firestore.GeoPoint(value, this.longitude);
   }
 
-  public get longitude() {
+  public get longitude(): number {
     return this._native.longitude;
   }
 
@@ -32,7 +32,7 @@ export default class GeoPoint implements IGeoPoint {
     this._native = new firestore.GeoPoint(this.latitude, value);
   }
 
-  public isEqual(other : IGeoPoint) {
+  public isEqual(other: IGeoPoint): boolean {
     return this._native.isEqual(other.native);
   }
 }
