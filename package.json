@@ -1,13 +1,15 @@
 {
   "name": "firebase-firestorm",
-  "version": "0.1.2",
+  "version": "0.0.0-development",
   "description": "A firestore ORM for Typescript",
   "main": "lib/index.js",
   "scripts": {
     "build": "tsc",
     "test": "GOOGLE_APPLICATION_CREDENTIALS='service-account.json' nyc mocha -r ts-node/register test/**/*.spec.ts",
     "docs": "typedoc --excludeExternals --mode file --out docs src",
-    "lint": "eslint src/**/*.ts"
+    "lint": "eslint src/**/*.ts",
+    "commit": "npx git-cz",
+    "semantic-release": "semantic-release"
   },
   "keywords": [
     "firestorm",
@@ -21,7 +23,7 @@
   "author": "Lewis McQuillan",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lmcq/firebase-firestorm"
+    "url": "https://github.com/lmcq/firebase-firestorm"
   },
   "license": "MIT",
   "devDependencies": {
@@ -33,6 +35,7 @@
     "@typescript-eslint/parser": "^1.13.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
+    "cz-conventional-changelog": "^3.0.2",
     "eslint": "^6.1.0",
     "mocha": "^6.2.0",
     "mock-cloud-firestore": "^0.9.3",
@@ -60,5 +63,10 @@
       "html"
     ],
     "all": true
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
