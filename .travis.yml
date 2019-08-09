@@ -31,12 +31,11 @@ jobs:
     # Define the release stage that runs semantic-release
     - stage: release
       node_js: lts/*
-      script: skip
+      script: 
+        -           # Decrypt service account file
+          - openssl aes-256-cbc -K $encrypted_2be0a157b4e7_key -iv $encrypted_2be0a157b4e7_iv -in service-account.json.enc -out service-account.json -d
       deploy:
         provider: script
         skip_cleanup: true
-        before_script:
-          # Decrypt service account file
-          - openssl aes-256-cbc -K $encrypted_2be0a157b4e7_key -iv $encrypted_2be0a157b4e7_iv -in service-account.json.enc -out service-account.json -d
         script:
           - npx semantic-release
