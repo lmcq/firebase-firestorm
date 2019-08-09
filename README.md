@@ -1,4 +1,5 @@
 # Firebase Firestorm for Typescript
+[![Build Status](https://travis-ci.org/lmcq/firebase-firestorm.svg?branch=master)](https://travis-ci.org/lmcq/firebase-firestorm)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
