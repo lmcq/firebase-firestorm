@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/lmcq/firebase-firestorm.svg?branch=master)](https://travis-ci.org/lmcq/firebase-firestorm)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0055aad0e1244ebea87b08af2eed7906)](https://www.codacy.com/app/lmcq/firebase-firestorm?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lmcq/firebase-firestorm&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/0055aad0e1244ebea87b08af2eed7906)](https://www.codacy.com/app/lmcq/firebase-firestorm?utm_source=github.com&utm_medium=referral&utm_content=lmcq/firebase-firestorm&utm_campaign=Badge_Coverage)
 
 Firestorm is an [ORM](https://en.wikipedia.org/wiki/Object-relational_mapping)
 for [firestore](https://firebase.google.com/docs/firestore) which can be used
