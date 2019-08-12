@@ -1,5 +1,5 @@
 import * as firestore from '@google-cloud/firestore';
-import { IEntity, ICollectionQuery, ICollection } from '../types';
+import { IEntity, ICollectionQuery, ICollection, IFieldMeta } from '../types';
 
 /**
  * Utility functions to build firestore-compatiable queries.
@@ -10,7 +10,11 @@ export default class QueryBuilder {
    * @param collectionRef The native firestore collection reference.
    * @param query The firestorm query
    */
-  public static query<T extends IEntity>(collection: ICollection<T>, query: ICollectionQuery<T>): firestore.Query {
+  public static query<T extends IEntity>(
+    collection: ICollection<T>,
+    fields: Map<string, IFieldMeta>,
+    query: ICollectionQuery<T>,
+  ): firestore.Query {
     const collectionRef = collection.native;
     const {
       where: whereQueries,
@@ -22,8 +26,12 @@ export default class QueryBuilder {
       limit: limitQuery,
     } = query;
     let q = (whereQueries || []).reduce((accum: any, curr): firestore.Query  => {
-      const [field, operator, value] = curr;
-      return accum.where(field, operator, value);
+      const [property, operator, value] = curr;
+      const field = fields.get(property as string);
+      if (field) {
+        return accum.where(field.name, operator, value);
+      }
+      throw new Error(`Could not find property ${property} in collection ${collection.path}`);
     }, collectionRef);
 
     if (orderByQueries) {

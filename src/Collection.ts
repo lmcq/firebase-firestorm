@@ -150,7 +150,8 @@ class Collection <T extends Entity, P extends Entity> implements ICollection<T, 
   public async find(query? : ICollectionQuery<T>): Promise<T[]> {
     let querySnapshot: firestore.QuerySnapshot;
     if (query) {
-      querySnapshot = await QueryBuilder.query(this, query).get();
+      const fields = getRepository(this._Entity.prototype.constructor.name).fields;
+      querySnapshot = await QueryBuilder.query(this, fields, query).get();
     } else {
       querySnapshot = await this._native.get();
     }
