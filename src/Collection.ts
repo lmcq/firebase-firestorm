@@ -101,12 +101,15 @@ class Collection <T extends Entity, P extends Entity> implements ICollection<T, 
    * 
    * @returns The entity.
    */
-  public async get(id: string): Promise<T | null> {
-    const snapshot = await this._native.doc(id).get();
-    if (snapshot.exists) {
-      return FirestoreSerializer.deserialize(snapshot, this._Entity, this);
-    }
-    return null;
+  public get(id: string): Promise<T | null> {
+    return new Promise((resolve): void => {
+      this._native.doc(id).get().then((snapshot): void => {
+        if (snapshot.exists) {
+          resolve(FirestoreSerializer.deserialize(snapshot, this._Entity, this));
+        }
+        return resolve(null);
+      });
+    });
   }
 
   /**
@@ -115,13 +118,18 @@ class Collection <T extends Entity, P extends Entity> implements ICollection<T, 
    * 
    * @returns The updated entity.
    */
-  public async update(entity: T): Promise<T | null> {
-    if (!entity.id) {
-      throw new Error(`An ID must be provided when updating ${entity.constructor.name}`);
-    }
-    const { id, ...data } = FirestoreSerializer.serialize(entity, WriteTypes.Update);
-    await this._native.doc(id).update(data);
-    return this.get(entity.id);
+  public update(entity: T): Promise<T | null> {
+    return new Promise((resolve): void => {
+      if (!entity.id) {
+        throw new Error(`An ID must be provided when updating ${entity.constructor.name}`);
+      }
+      const { id, ...data } = FirestoreSerializer.serialize(entity, WriteTypes.Update);
+      this._native.doc(id).update(data).then((): void => {
+        this.get(entity.id).then((updatedEntity): void => {
+          resolve(updatedEntity);
+        });
+      });
+    });
   };
 
   /**
@@ -130,15 +138,23 @@ class Collection <T extends Entity, P extends Entity> implements ICollection<T, 
    * 
    * @returns The created entity.
    */
-  public async create(entity: T): Promise<T | null> {
-    const { id, ...data } = FirestoreSerializer.serialize(entity, WriteTypes.Create);
-    if (id) {
-      await this._native.doc(id).set(data);
-      return this.get(id);
-    } else {
-      const result = await this._native.add(data);
-      return this.get(result.id);
-    }
+  public create(entity: T): Promise<T | null> {
+    return new Promise((resolve): void => {
+      const { id, ...data } = FirestoreSerializer.serialize(entity, WriteTypes.Create);
+      if (id) {
+        this._native.doc(id).set(data).then((): void => {
+          this.get(id).then((snapshot): void => {
+            resolve(snapshot);
+          });
+        });
+      } else {
+        this._native.add(data).then((result): void => {
+          this.get(result.id).then((snapshot): void => {
+            resolve(snapshot);
+          });
+        });
+      }
+    });
   };
 
   /**
@@ -147,16 +163,20 @@ class Collection <T extends Entity, P extends Entity> implements ICollection<T, 
    * 
    * @returns A list of entities matching the criteria.
    */
-  public async find(query? : ICollectionQuery<T>): Promise<T[]> {
-    let querySnapshot: firestore.QuerySnapshot;
-    if (query) {
-      const fields = getRepository(this._Entity.prototype.constructor.name).fields;
-      querySnapshot = await QueryBuilder.query(this, fields, query).get();
-    } else {
-      querySnapshot = await this._native.get();
-    }
-    return querySnapshot.docs.map((snapshot): T => {
-      return FirestoreSerializer.deserialize(snapshot, this._Entity, this) as T;
+  public find(query? : ICollectionQuery<T>): Promise<T[]> {
+    return new Promise((resolve): void => {
+      let querySnapshotPromise: Promise<firestore.QuerySnapshot>;
+      if (query) {
+        const fields = getRepository(this._Entity.prototype.constructor.name).fields;
+        querySnapshotPromise = QueryBuilder.query(this, fields, query).get();
+      } else {
+        querySnapshotPromise = this._native.get();
+      }
+      querySnapshotPromise.then((querySnapshot): void => {
+        resolve(querySnapshot.docs.map((snapshot): T => {
+          return FirestoreSerializer.deserialize(snapshot, this._Entity, this) as T;
+        }));
+      });
     });
   }
 
@@ -164,8 +184,12 @@ class Collection <T extends Entity, P extends Entity> implements ICollection<T, 
    * Removes a document from the collection.
    * @param id The document ID to remove.
    */
-  public async remove(id: string): Promise<void> {
-    await this._native.doc(id).delete();
+  public remove(id: string): Promise<void> {
+    return new Promise((resolve): void => {
+      this._native.doc(id).delete().then((): void => {
+        resolve();
+      });
+    });
   }
 }
 

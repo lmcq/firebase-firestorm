@@ -92,12 +92,17 @@ class DocumentRef <T extends Entity> implements IDocumentRef<T> {
   /**
    * Gets the data from the document reference.
    */
-  public async get(): Promise<T> {
-    if (this._cachedDocument === null) {
-      const snapshot = await this._native.get();
-      this._cachedDocument = FirestoreSerializer.deserialize(snapshot, this._model, this.parent);
-    }
-    return this._cachedDocument;
+  public get(): Promise<T> {
+    return new Promise((resolve): void => {
+      if (this._cachedDocument === null) {
+        this._native.get().then((snapshot): void => {
+          this._cachedDocument = FirestoreSerializer.deserialize(snapshot, this._model, this.parent); 
+          resolve(this._cachedDocument);
+        });
+      } else {
+        resolve(this._cachedDocument);
+      }
+    });
   }
 
   /**
