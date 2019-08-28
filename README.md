@@ -66,7 +66,7 @@ database might look using posts, comments and authors.
 
 #### 1. Initialize firestorm
 
-Call `firestorm.initialize(firestore, options?)` as soon as you intialize
+Call `firestorm.initialize(firestore, options?)` as soon as you initialize
 your firestore app. See [intialization options](###-initialization-options)
 for more information about intiailizing firestorm.
 
@@ -86,7 +86,7 @@ collection. To define a root collection you must:
 
 -   Extend from the `Entity` class.
 -   Annotate your class with `@rootCollection(opts: ICollectionConfig)`.
--   Declare a series of fields, annoted with `@field(opts: IFieldConfig)`.
+-   Declare a series of fields, annotated with `@field(opts: IFieldConfig)`.
 
 ```typescript
 import { Entity, rootCollection, field } from 'firebase-firestorm';
@@ -109,7 +109,7 @@ export default class Post extends Entity {
 > subcollection must extend from the `Entity` class provided.
 
 Now we want documents in the `posts` collection to have a subcollection 
-of `comments`. First, we need to create as class for the comments. Notice
+of `comments`. First, we need to create a class for the comments. Notice
 how we do not annotate the class with `@rootCollection`.
 
 ```typescript
@@ -357,7 +357,7 @@ example.nestedObject = nested;
 
 #### Geopoints
 
-Geopoints store locational data and can be used a field. We have a wrapper
+Geopoints store locational data and can be used as fields. We have a wrapper
 class for firestore's GeoPoint which basically serves the same functionality.
 
 ```typescript
