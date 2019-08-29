@@ -2,11 +2,11 @@ import { IFieldConfig, FieldTypes } from '../types';
 import FieldUtils from '../utils/FieldUtils';
 import { getOrCreateRepository } from '../store';
 
-export default function (fieldConfig: IFieldConfig): Function {
+export default function (fieldConfig?: IFieldConfig): Function {
   return function(target: any, key: string): void {
     const type = Reflect.getMetadata('design:type', target, key);
     const field = FieldUtils.configure(
-      fieldConfig,
+      fieldConfig || {},
       key,
       type(),
       FieldTypes.Standard);

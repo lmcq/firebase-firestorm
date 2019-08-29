@@ -54,12 +54,12 @@ const toData = (
  * Registers a geopoint field.
  * @param fieldConfig The field configuration for the geopoint.
  */
-export default function (fieldConfig: IGeoPointConfig): Function {
+export default function (fieldConfig?: IGeoPointConfig): Function {
   return function (target: any, key: string): void {
     const type = Reflect.getMetadata('design:type', target, key);
     // Process the field configuration.
     const field = FieldUtils.configure(
-      fieldConfig,
+      fieldConfig || {},
       key,
       type(),
       FieldTypes.GeoPoint,

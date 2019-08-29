@@ -26,7 +26,6 @@ export default class Post extends Entity {
   comments!: ICollection<Comment>;
 
   @timestamp({
-    name: 'posted',
     updateOnCreate: true,
   })
   posted!: ITimestamp;

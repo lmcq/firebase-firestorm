@@ -7,7 +7,7 @@ import AuthorPreferences from './AuthorPreferences';
   name: 'authors',
 })
 export default class Author extends Entity {
-  @field({ name: 'name' })
+  @field()
   name!: string;
 
   @map({ name: 'metadata' })
@@ -19,9 +19,7 @@ export default class Author extends Entity {
   })
   favoritedComments!: IDocumentRef<Comment>[];
 
-  @geoPoint({
-    name: 'location'
-  })
+  @geoPoint()
   location!: IGeoPoint;
 
   @geoPoint({

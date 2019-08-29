@@ -77,20 +77,21 @@ const toData = (
   );
 };
 
-export default function (fieldConfig: ITimestampConfig): Function {
+export default function (fieldConfig?: ITimestampConfig): Function {
   return function (target: any, key: string): void {
+    let _fieldConfig = fieldConfig || {};
     // Configure the field.
     const type = Reflect.getMetadata('design:type', target, key);
     const field = FieldUtils.configure(
-      fieldConfig,
+      _fieldConfig,
       key,
       type(),
       FieldTypes.Timestamp,
     ) as ITimestampMeta;
-    field.updateOnWrite = fieldConfig.updateOnWrite || false;
-    field.updateOnCreate = fieldConfig.updateOnCreate || false;
-    field.updateOnUpdate = fieldConfig.updateOnUpdate || false;
-    field.format = fieldConfig.format || ((date: Date): string => date.toLocaleString());
+    field.updateOnWrite = _fieldConfig.updateOnWrite || false;
+    field.updateOnCreate = _fieldConfig.updateOnCreate || false;
+    field.updateOnUpdate = _fieldConfig.updateOnUpdate || false;
+    field.format = _fieldConfig.format || ((date: Date): string => date.toLocaleString());
     field.deserialize = (value: firestore.Timestamp | firestore.Timestamp[]): Timestamp | Timestamp[] => {
       return deserialize(field.isArray, value);
     };
