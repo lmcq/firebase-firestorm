@@ -1,9 +1,10 @@
 import { IDocumentRef, ICollection } from '../types';
-import * as firestore from '@google-cloud/firestore';
+import { firestore } from 'firebase/app';
 import { FirestoreSerializer } from '../utils';
 import Collection from '../Collection';
 import Entity from '../Entity';
 import { getRepository } from '../store';
+import DocumentSnapshot from '../DocumentSnapshot';
 
 /**
  * Representation of a Document Reference
@@ -124,6 +125,30 @@ class DocumentRef <T extends Entity> implements IDocumentRef<T> {
       return Collection(collectionModel, this);
     }
     throw new Error(`Could not find collection ${collectionModel.prototype.constructor.name} in parent ${this._model.prototype.constructor.name}`);
+  }
+
+  /**
+   * Attaches a listener for snapshot events for the document
+   * @param onNext Callback which is called when a new snapshot is available.
+   * @param onError Callback which is called when listen fails.
+   * @returns The unsubscribe function for the listener.
+   */
+  public onSnapshot(onNext: (snapshot: DocumentSnapshot<T>) => void, onError?: (e: Error) => void): (() => void) {
+    return this._native.onSnapshot((snapshot): void => {
+      onNext(this.buildSnapshot(snapshot));
+    }, onError);
+  }
+
+  /**
+   * Creates a firestorm snapshot from the firestore snapshot.
+   * @param nativeSnapshot The native query document snapshot.
+   */
+  private buildSnapshot(nativeSnapshot: firestore.DocumentSnapshot): DocumentSnapshot<T> {
+    return new DocumentSnapshot(
+      nativeSnapshot,
+      this._model,
+      this._parent,
+    );
   }
 }
 

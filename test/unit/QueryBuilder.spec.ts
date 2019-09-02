@@ -1,4 +1,4 @@
-import { Firestore } from '@google-cloud/firestore';
+import { firestore } from 'firebase/app';
 import { expect } from 'chai';
 import 'mocha';
 import { Collection, IFieldMeta } from '../../src';
@@ -9,7 +9,7 @@ import Post from '../../test/entities/Post';
 import { getRepository } from '../../src/store';
 
 describe('[unit] QueryBuilder', (): void => {
-  let firestore: Firestore;
+  let firestore: firestore.Firestore;
   let fields: Map<string, IFieldMeta>;
 
   beforeEach((): void => {
@@ -23,6 +23,17 @@ describe('[unit] QueryBuilder', (): void => {
   });
 
   describe('where queries', (): void => {
+    it('unregister property should throw an error', (): void => {
+      expect((): any => QueryBuilder.query(
+        Collection(Post),
+        fields,
+        {
+          where: [
+            [('unregistered' as any), '==', 'any']
+          ],
+        })
+      ).to.throw(Error);
+    });
     it('empty where should match firestore base collection query', async (): Promise<void> => {
       const query = QueryBuilder.query(
         Collection(Post),

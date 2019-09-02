@@ -1,4 +1,4 @@
-import * as firestore from '@google-cloud/firestore';
+import { firestore } from 'firebase/app';
 import { FieldTypes, ICollection, WriteTypes } from '../types';
 import { getRepository } from '../store';
 import Entity from '../Entity';

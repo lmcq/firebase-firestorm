@@ -106,6 +106,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="idocumentref.html#collection" class="tsd-kind-icon">collection</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="idocumentref.html#get" class="tsd-kind-icon">get</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="idocumentref.html#isfetched" class="tsd-kind-icon">is<wbr>Fetched</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="idocumentref.html#onsnapshot" class="tsd-kind-icon">on<wbr>Snapshot</a></li>
 							</ul>
 						</section>
 					</div>
@@ -116,10 +117,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="cached" class="tsd-anchor"></a>
 					<h3>cached</h3>
-					<div class="tsd-signature tsd-kind-icon">cached<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span></div>
+					<div class="tsd-signature tsd-kind-icon">cached<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in types/field.types.ts:33</li>
+							<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/types/field.types.ts#L34">types/field.types.ts:34</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -129,17 +130,17 @@
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in types/field.types.ts:32</li>
+							<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/types/field.types.ts#L33">types/field.types.ts:33</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="native" class="tsd-anchor"></a>
 					<h3>native</h3>
-					<div class="tsd-signature tsd-kind-icon">native<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">firestore.DocumentReference</span></div>
+					<div class="tsd-signature tsd-kind-icon">native<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DocumentReference</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in types/field.types.ts:34</li>
+							<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/types/field.types.ts#L35">types/field.types.ts:35</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -149,7 +150,7 @@
 					<div class="tsd-signature tsd-kind-icon">parent<span class="tsd-signature-symbol">:</span> <a href="icollection.html" class="tsd-signature-type">ICollection</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in types/field.types.ts:36</li>
+							<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/types/field.types.ts#L37">types/field.types.ts:37</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -159,7 +160,7 @@
 					<div class="tsd-signature tsd-kind-icon">path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in types/field.types.ts:35</li>
+							<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/types/field.types.ts#L36">types/field.types.ts:36</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -176,7 +177,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in types/field.types.ts:39</li>
+									<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/types/field.types.ts#L40">types/field.types.ts:40</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -207,7 +208,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in types/field.types.ts:38</li>
+									<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/types/field.types.ts#L39">types/field.types.ts:39</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -224,10 +225,66 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in types/field.types.ts:37</li>
+									<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/types/field.types.ts#L38">types/field.types.ts:38</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="onsnapshot" class="tsd-anchor"></a>
+					<h3>on<wbr>Snapshot</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Snapshot<span class="tsd-signature-symbol">(</span>onNext<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, onError<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/types/field.types.ts#L41">types/field.types.ts:41</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>onNext: <span class="tsd-signature-type">function</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>snapshot<span class="tsd-signature-symbol">: </span><a href="idocumentsnapshot.html" class="tsd-signature-type">IDocumentSnapshot</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>snapshot: <a href="idocumentsnapshot.html" class="tsd-signature-type">IDocumentSnapshot</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> onError: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">function</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter-siganture">
+									<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+									</ul>
+									<ul class="tsd-descriptions">
+										<li class="tsd-description">
+											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+										</li>
+									</ul>
+								</li>
+							</ul>
 						</li>
 					</ul>
 				</section>
@@ -271,6 +328,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="idocumentref.html#isfetched" class="tsd-kind-icon">is<wbr>Fetched</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="idocumentref.html#onsnapshot" class="tsd-kind-icon">on<wbr>Snapshot</a>
 							</li>
 						</ul>
 					</li>

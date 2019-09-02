@@ -1,34 +1,30 @@
 import * as bootstrap from '../../test/bootstrap.spec';
 import chai, { expect } from 'chai';
 import 'mocha';
-import { Collection, Entity, GeoPoint, ICollection } from '../../src';
+import { Collection, GeoPoint, ICollection } from '../../src';
 import Post from '../entities/Post';
 import chaiAsPromised from 'chai-as-promised';
-import fixture from '../fixture';
 import Author from '../entities/Author';
 import { Timestamp } from '../../src/fields';
-import { Firestore } from '@google-cloud/firestore';
 import AuthorPreferences from '../entities/AuthorPreferences';
 
 chai.use(chaiAsPromised);
 
-describe('[functional] querying data', () => {
+describe('[functional] querying data', (): void => {
   let docId: string;
   let collectionRef: ICollection<Post>;
-  let firestore: Firestore;
 
-  before(() => {
+  before((): void => {
     bootstrap.start();
     docId = 'hello-world';
     collectionRef = Collection(Post);
-    firestore = bootstrap.getFirestore();
   });
 
-  after(() => {
+  after((): void => {
     bootstrap.reset();
   });
 
-  const createDocument = async (id?: string) => {
+  const createDocument = async (id?: string): Promise<void> => {
     const title = 'Simple Collections Integration';
     const body = 'This document was created using the integration test';
     const post = new Post();
@@ -49,13 +45,13 @@ describe('[functional] querying data', () => {
       await Collection(Post).remove(newPost.id);
     }
   }
-  it('creating document without id should create doc with generated id', async () => {
+  it('creating document without id should create doc with generated id', async (): Promise<void> => {
     await createDocument();
   });
-  it('creating document with id should create doc with id', async () => {
+  it('creating document with id should create doc with id', async (): Promise<void> => {
     await createDocument('manual-id');
   });
-  it('create author document with geopoint', async () => {
+  it('create author document with geopoint', async (): Promise<void> => {
     const name = 'Jane Doe';
     const location = new GeoPoint(40.7128, -74.006);
     const previousLocations = [
@@ -76,7 +72,7 @@ describe('[functional] querying data', () => {
       await Collection(Author).remove(newAuthor.id);
     }
   });
-  it('create author with map', async () => {
+  it('create author with map', async (): Promise<void> => {
     const name = 'Jane Doe';
     const author = new Author();
     author.name = name;
@@ -92,7 +88,7 @@ describe('[functional] querying data', () => {
       await Collection(Author).remove(newAuthor.id);
     }
   });
-  const updateDocument = async (id?: string) => {
+  const updateDocument = async (id?: string): Promise<void> => {
     const title = 'Simple Collections Integration Updated';
     const body = 'This document was created using the integration test';
     const post = new Post();
@@ -118,17 +114,17 @@ describe('[functional] querying data', () => {
       await expect(Collection(Post).update(post)).to.be.rejectedWith(Error);
     }
   };
-  it('updating document without id should throw an error, id must be provided', async () => {
+  it('updating document without id should throw an error, id must be provided', async (): Promise<void> => {
     await updateDocument();
   });
-  it('updating document with id should update doc with id', async () => {
+  it('updating document with id should update doc with id', async (): Promise<void> => {
     await updateDocument('manual-id');
   });
-  it('undefinedAuthorRefGetCached', async () => {
+  it('undefinedAuthorRefGetCached', async (): Promise<void> => {
     const post = await collectionRef.get(docId);
-    if (post) expect(() => post.author.cached).to.throw(Error);
+    if (post) expect((): Author | null => post.author.cached).to.throw(Error);
   });
-  it('remove document should return null when fetched again', async () => {
+  it('remove document should return null when fetched again', async (): Promise<void> => {
     await createDocument('removed');
     await collectionRef.remove('removed');
     const post = await collectionRef.get('removed');

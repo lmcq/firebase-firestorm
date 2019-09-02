@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>GeoPoint | firebase-firestorm</title>
+	<title>DocumentSnapshot | firebase-firestorm</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,36 +54,36 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="geopoint.html">GeoPoint</a>
+					<a href="documentsnapshot.html">DocumentSnapshot</a>
 				</li>
 			</ul>
-			<h1>Class GeoPoint</h1>
+			<h1>Class DocumentSnapshot&lt;T&gt;</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Wrapper for firestore geopoint class, mainly used to keep
-						imports clean when using the library.</p>
-					</div>
-				</div>
+			<section class="tsd-panel tsd-type-parameters">
+				<h3>Type parameters</h3>
+				<ul class="tsd-type-parameters">
+					<li>
+						<h4>T<span class="tsd-signature-symbol">: </span><a href="entity.html" class="tsd-signature-type">Entity</a></h4>
+					</li>
+				</ul>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">GeoPoint</span>
+						<span class="target">DocumentSnapshot</span>
 					</li>
 				</ul>
 			</section>
 			<section class="tsd-panel">
 				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="../interfaces/igeopoint.html" class="tsd-signature-type">IGeoPoint</a></li>
+					<li><a href="../interfaces/idocumentsnapshot.html" class="tsd-signature-type">IDocumentSnapshot</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -93,27 +93,16 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="geopoint.html#constructor" class="tsd-kind-icon">constructor</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
-							<h3>Properties</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="geopoint.html#_native" class="tsd-kind-icon">_native</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="documentsnapshot.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="geopoint.html#latitude" class="tsd-kind-icon">latitude</a></li>
-								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="geopoint.html#longitude" class="tsd-kind-icon">longitude</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="geopoint.html#native" class="tsd-kind-icon">native</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Methods</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="geopoint.html#isequal" class="tsd-kind-icon">is<wbr>Equal</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="documentsnapshot.html#doc" class="tsd-kind-icon">doc</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="documentsnapshot.html#exists" class="tsd-kind-icon">exists</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="documentsnapshot.html#metadata" class="tsd-kind-icon">metadata</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="documentsnapshot.html#ref" class="tsd-kind-icon">ref</a></li>
 							</ul>
 						</section>
 					</div>
@@ -125,148 +114,141 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Geo<wbr>Point<span class="tsd-signature-symbol">(</span>latitude<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, longitude<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="geopoint.html" class="tsd-signature-type">GeoPoint</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Document<wbr>Snapshot<span class="tsd-signature-symbol">(</span>nativeSnapshot<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DocumentSnapshot</span>, Entity<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span>, collection<span class="tsd-signature-symbol">: </span><a href="../interfaces/icollection.html" class="tsd-signature-type">ICollection</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="documentsnapshot.html" class="tsd-signature-type">DocumentSnapshot</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/fields/GeoPoint.ts#L9">fields/GeoPoint.ts:9</a></li>
+									<li>Defined in DocumentSnapshot.ts:15</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a document snapshot.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>latitude: <span class="tsd-signature-type">number</span></h5>
+									<h5>nativeSnapshot: <span class="tsd-signature-type">DocumentSnapshot</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The firestore DocumentSnapshot.</p>
+										</div>
+									</div>
 								</li>
 								<li>
-									<h5>longitude: <span class="tsd-signature-type">number</span></h5>
+									<h5>Entity: <span class="tsd-signature-type">object</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The entity to represent.</p>
+										</div>
+									</div>
+									<ul class="tsd-parameters">
+									</ul>
+								</li>
+								<li>
+									<h5>collection: <a href="../interfaces/icollection.html" class="tsd-signature-type">ICollection</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The parent collection for the entity.</p>
+										</div>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="geopoint.html" class="tsd-signature-type">GeoPoint</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="documentsnapshot.html" class="tsd-signature-type">DocumentSnapshot</a></h4>
 						</li>
 					</ul>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="_native" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _native</h3>
-					<div class="tsd-signature tsd-kind-icon">_native<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">GeoPoint</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/fields/GeoPoint.ts#L9">fields/GeoPoint.ts:9</a></li>
-						</ul>
-					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Accessors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
-					<a name="latitude" class="tsd-anchor"></a>
-					<h3>latitude</h3>
-					<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> latitude<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> latitude<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="doc" class="tsd-anchor"></a>
+					<h3>doc</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> doc<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/fields/GeoPoint.ts#L19">fields/GeoPoint.ts:19</a></li>
+									<li>Defined in DocumentSnapshot.ts:35</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/fields/GeoPoint.ts#L23">fields/GeoPoint.ts:23</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>value: <span class="tsd-signature-type">number</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
-					<a name="longitude" class="tsd-anchor"></a>
-					<h3>longitude</h3>
-					<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> longitude<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> longitude<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/fields/GeoPoint.ts#L27">fields/GeoPoint.ts:27</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/fields/GeoPoint.ts#L31">fields/GeoPoint.ts:31</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>value: <span class="tsd-signature-type">number</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The document in the snapshot.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
-					<a name="native" class="tsd-anchor"></a>
-					<h3>native</h3>
+					<a name="exists" class="tsd-anchor"></a>
+					<h3>exists</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> native<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">GeoPoint</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> exists<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/fields/GeoPoint.ts#L15">fields/GeoPoint.ts:15</a></li>
+									<li>Defined in DocumentSnapshot.ts:40</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">GeoPoint</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Whether or not the document exists.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
 				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="isequal" class="tsd-anchor"></a>
-					<h3>is<wbr>Equal</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Equal<span class="tsd-signature-symbol">(</span>other<span class="tsd-signature-symbol">: </span><a href="../interfaces/igeopoint.html" class="tsd-signature-type">IGeoPoint</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="metadata" class="tsd-anchor"></a>
+					<h3>metadata</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> metadata<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">SnapshotMetadata</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/fields/GeoPoint.ts#L35">fields/GeoPoint.ts:35</a></li>
+									<li>Defined in DocumentSnapshot.ts:50</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>other: <a href="../interfaces/igeopoint.html" class="tsd-signature-type">IGeoPoint</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The metadata for the reference.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">SnapshotMetadata</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="ref" class="tsd-anchor"></a>
+					<h3>ref</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> ref<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/idocumentref.html" class="tsd-signature-type">IDocumentRef</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in DocumentSnapshot.ts:45</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The document reference.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/idocumentref.html" class="tsd-signature-type">IDocumentRef</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -284,26 +266,23 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class">
-						<a href="geopoint.html" class="tsd-kind-icon">Geo<wbr>Point</a>
+					<li class="current tsd-kind-class tsd-has-type-parameter">
+						<a href="documentsnapshot.html" class="tsd-kind-icon">Document<wbr>Snapshot</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="geopoint.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="geopoint.html#_native" class="tsd-kind-icon">_native</a>
-							</li>
-							<li class=" tsd-kind-accessor tsd-parent-kind-class">
-								<a href="geopoint.html#latitude" class="tsd-kind-icon">latitude</a>
-							</li>
-							<li class=" tsd-kind-accessor tsd-parent-kind-class">
-								<a href="geopoint.html#longitude" class="tsd-kind-icon">longitude</a>
+								<a href="documentsnapshot.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="geopoint.html#native" class="tsd-kind-icon">native</a>
+								<a href="documentsnapshot.html#doc" class="tsd-kind-icon">doc</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="geopoint.html#isequal" class="tsd-kind-icon">is<wbr>Equal</a>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="documentsnapshot.html#exists" class="tsd-kind-icon">exists</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="documentsnapshot.html#metadata" class="tsd-kind-icon">metadata</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="documentsnapshot.html#ref" class="tsd-kind-icon">ref</a>
 							</li>
 						</ul>
 					</li>

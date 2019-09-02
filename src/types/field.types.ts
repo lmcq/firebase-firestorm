@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
-import * as firestore from '@google-cloud/firestore';
+import { firestore } from 'firebase/app';
 import { FieldTypes } from './enum.types';
-import { ICollection, IEntity } from './collection.types';
+import { ICollection, IEntity, IDocumentSnapshot } from './collection.types';
 
 // Base Field Config
 
@@ -38,6 +38,10 @@ export interface IDocumentRef <T extends IEntity> {
   isFetched(): boolean;
   get(): Promise<T>;
   collection<C extends IEntity>(coll: new () => C): ICollection<C>;
+  onSnapshot(
+    onNext: (snapshot: IDocumentSnapshot<T>) => void,
+    onError?: (error: Error) => void,
+  ): (() => void);
 }
 
 export interface IDocumentRefConfig extends IFieldWithEntityConfig {

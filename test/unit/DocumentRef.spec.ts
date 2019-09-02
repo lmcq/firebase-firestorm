@@ -1,4 +1,4 @@
-import { Firestore } from '@google-cloud/firestore';
+import { firestore as firestoreTypes } from 'firebase/app';
 import { expect } from 'chai';
 import 'mocha';
 import {
@@ -13,28 +13,28 @@ import Post from '../entities/Post';
 import Comment from '../entities/Comment';
 import Author from '../entities/Author';
 
-describe('[unit] DocumentRef', () => {
+describe('[unit] DocumentRef', (): void => {
   let post: ICollection<Post>;
   let doc: IDocumentRef<Post>;
-  let firestore: Firestore;
+  let firestore: firestoreTypes.Firestore;
   
   // Setup firestorm and get doc refs
-  beforeEach(() => {
+  beforeEach((): void => {
     bootstrap.start();
     post = Collection(Post);
     doc = DocumentRef('hello-world', Post, post);
     firestore = bootstrap.getFirestore();
   });
-  describe('#id', () => {
-    it('should provide the document ID', () => {
+  describe('#id', (): void => {
+    it('should provide the document ID', (): void => {
       expect(doc.id).to.equal('hello-world');
     });
   });
-  describe('#path', () => {
-    it('should produce a valid path', () => {
+  describe('#path', (): void => {
+    it('should produce a valid path', (): void => {
       expect(doc.path).to.equal('/posts/hello-world');
     });
-    it('document ref to nested document should produce valid path', async () => {
+    it('document ref to nested document should produce valid path', async (): Promise<void> => {
       const author = await Collection(Author).get('john-doe');
       if (author) {
         const favoriteComment = author.favoritedComments[0];
@@ -43,24 +43,24 @@ describe('[unit] DocumentRef', () => {
       }
     });
   });
-  describe('#parent', () => {
-    it('parent should be equal to Post collection', () => {
+  describe('#parent', (): void => {
+    it('parent should be equal to Post collection', (): void => {
       expect(doc.parent).to.be.eql(post);
     });
   });
-  describe('#native', () => {
-    it('native reference should equal firestore reference', () => {
+  describe('#native', (): void => {
+    it('native reference should equal firestore reference', (): void => {
       expect(doc.native.id).to.eql(firestore.doc('posts/hello-world').id);
     });
   });
-  describe('#collection', () => {
-    it('should produce valid collection reference', () => {
+  describe('#collection', (): void => {
+    it('should produce valid collection reference', (): void => {
       const commentCollect = doc.collection(Comment);
       expect(commentCollect.path).to.equal(`/${firestore.collection('posts/hello-world/comments').path}`);
     });
   });
-  describe('#get', () => {
-    it('should get the document data', async () => {
+  describe('#get', (): void => {
+    it('should get the document data', async (): Promise<void> => {
       expect(doc.isFetched()).to.equal(false);
       const data = await doc.get();
       expect(doc.isFetched()).to.equal(true);
@@ -69,7 +69,7 @@ describe('[unit] DocumentRef', () => {
       expect(data.body).to.equal('This is an example post.');
       expect(data.author.id).to.equal('john-doe');
     });
-    it('already fetched doc should return cached', async () => {
+    it('already fetched doc should return cached', async (): Promise<void> => {
       expect(doc.isFetched()).to.equal(false);
       let data = await doc.get();
       expect(doc.isFetched()).to.equal(true);

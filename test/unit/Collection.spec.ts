@@ -1,6 +1,6 @@
-import { Firestore } from '@google-cloud/firestore';
 import { expect } from 'chai';
 import 'mocha';
+import { firestore as firestoreTypes } from 'firebase/app';
 import {
   Collection,
   ICollection,
@@ -11,57 +11,55 @@ import Post from '../entities/Post';
 import Comment from '../entities/Comment';
 import Author from '../entities/Author';
 
-describe('[unit] Collection', () => {
-  describe('calling Collection(IEntity) without calling initialize()', () => {
-    beforeEach(() => {
+describe('[unit] Collection', (): void => {
+  describe('calling Collection(IEntity) without calling initialize()', (): void => {
+    beforeEach((): void => {
       bootstrap.reset();
     });
-    it('should throw an error', () => {
-      expect(() => Collection(Post)).to.throw(Error);
+    it('should throw an error', (): void => {
+      expect((): ICollection<Post> => Collection(Post)).to.throw(Error);
     });
   });
 
-  describe('calling Collection(IEntity) when calling initialize()', () => {
-    beforeEach(() => {
+  describe('calling Collection(IEntity) when calling initialize()', (): void => {
+    beforeEach((): void => {
       bootstrap.start();
     });
-    describe('with invalid entity', () => {
-      it('should throw an error', () => {
-        expect(() => Collection(undefined as any)).to.throw(Error);
+    describe('with invalid entity', (): void => {
+      it('should throw an error', (): void => {
+        expect((): ICollection<any> => Collection(undefined as any)).to.throw(Error);
       });
     });
-    describe('with valid entity', () => {
-      let post : ICollection<Post>;
-      let comments : ICollection<Comment>;
-      let firestore : Firestore;
-      beforeEach(() => {
+    describe('with valid entity', (): void => {
+      let post: ICollection<Post>;
+      let firestore: firestoreTypes.Firestore;
+      beforeEach((): void => {
         post = Collection(Post);
-        comments = Collection(Comment);
         firestore = bootstrap.getFirestore();
       });
-      it('should not throw an error', () => {
-        expect(() => Collection(Post)).to.not.throw(Error);
+      it('should not throw an error', (): void => {
+        expect((): ICollection<Post> => Collection(Post)).to.not.throw(Error);
       });
-      describe('#doc', () => {
-        it('should provide a document ref when provided a valid ID', () => {
+      describe('#doc', (): void => {
+        it('should provide a document ref when provided a valid ID', (): void => {
           const doc = post.doc('hello-world');
           expect(doc).to.not.be.null.and.not.be.undefined;
         });
       });
-      describe('#path', () => {
-        it('root collection should produce a valid path', () => {
+      describe('#path', (): void => {
+        it('root collection should produce a valid path', (): void => {
           expect(post.path).to.equal('/posts');
         });
-        it('sub collection should produce a valid path', () => {
+        it('sub collection should produce a valid path', (): void => {
           const doc = post.doc('hello-world');
           expect(doc.collection(Comment).path).to.equal('/posts/hello-world/comments');
         });
       });
-      describe('#parent', () => {
-        it('root collection should have null parent', () => {
+      describe('#parent', (): void => {
+        it('root collection should have null parent', (): void => {
           expect(post.parent).to.be.null;
         });
-        it('sub collection parent should be document ref', () => {
+        it('sub collection parent should be document ref', (): void => {
           const commentCollection = post.doc('hello-world').collection(Comment);
           const doc = commentCollection.parent;
           if (doc) {
@@ -70,15 +68,15 @@ describe('[unit] Collection', () => {
             expect(doc.id).to.equal(firestoreDoc.id);
           }
         });
-        it('invalid subcollection from post ref should throw an error', () => {
-          expect(() => post.doc('hello-wolrd').collection(Author)).to.throw(Error);
+        it('invalid subcollection from post ref should throw an error', (): void => {
+          expect((): ICollection<Author> => post.doc('hello-wolrd').collection(Author)).to.throw(Error);
         });
       });
-      describe('#native', () => {
-        it('root collection native reference should equal firestore reference', () => {
+      describe('#native', (): void => {
+        it('root collection native reference should equal firestore reference', (): void => {
           expect(post.native.id).to.eql(firestore.collection('posts').id);
         });
-        it('subcollection native should equal firestore reference', () => {
+        it('subcollection native should equal firestore reference', (): void => {
           const commentCollection = post.doc('hello-world').collection(Comment);
           expect(commentCollection.native.id).to.eql(firestore.collection('posts/hello-world/comments').id);
         });

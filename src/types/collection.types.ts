@@ -1,5 +1,6 @@
-import * as firestore from '@google-cloud/firestore';
+import { firestore } from 'firebase/app';
 import { IDocumentRef } from './field.types';
+import { Query } from '..';
 
 export interface IEntity {
   id: string;
@@ -7,10 +8,42 @@ export interface IEntity {
   toData(): Record<string, any>;
 }
 
+export interface IQuery <T extends IEntity> {
+  where(property: keyof T, op: firestore.WhereFilterOp, value: any): IQuery<T>;
+  orderBy(property: keyof T, sort?: firestore.OrderByDirection): IQuery<T>;
+  limit(amount: number): IQuery<T>;
+  startAt(...fieldValues: any[]): IQuery<T>;
+  startAfter(...fieldValues: any[]): Query<T>;
+  endAt(...fieldValues: any[]): Query<T>;
+  endBefore(...fieldValues: any[]): Query<T>;
+  onSnapshot(
+    onNext: (snapshot: IQuerySnapshot<T>) => void, onError?: (error: Error) => void,
+  ): (() => void);
+  get(): Promise<IQuerySnapshot<T>>;
+}
+
+export interface IQuerySnapshot <T extends IEntity> {
+  docs: T[];
+  size: number;
+  empty: boolean;
+  query: IQuery<T>;
+  metadata: firestore.SnapshotMetadata;
+  forEach: (callback: ((doc: T, index: number) => void)) => void;
+  docChanges: (opts?: firestore.SnapshotListenOptions) => DocumentChange<T>[];
+}
+
+export interface IDocumentSnapshot <T extends IEntity> {
+  doc: T;
+  exists: boolean;
+  ref: IDocumentRef<T>;
+  metadata: firestore.SnapshotMetadata;
+}
+
 export interface ICollection <T extends IEntity, P extends IEntity = any> {
   native: firestore.CollectionReference;
   path: string;
   parent? : IDocumentRef<P> | null;
+  query: () => IQuery<T>;
   create: (entity: T) => Promise<T | null>;
   update: (entity: T) => Promise<T | null>;
   doc: (id: string) => IDocumentRef<T>;
@@ -18,6 +51,13 @@ export interface ICollection <T extends IEntity, P extends IEntity = any> {
   find: (query? : ICollectionQuery<T>) => Promise<T[]>;
   remove: (id: string) => Promise<void>;
 };
+
+export interface DocumentChange <T extends IEntity> {
+  doc: T;
+  type: firestore.DocumentChangeType;
+  newIndex: number;
+  oldIndex: number;
+}
 
 export interface ICollectionConfig {
   name: string;

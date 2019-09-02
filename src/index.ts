@@ -6,3 +6,4 @@ export * from './decorators';
 export * from './fields';
 export { default as Entity } from './Entity';
 export { default as Collection } from './Collection';
+export { default as Query } from './Query';

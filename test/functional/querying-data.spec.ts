@@ -1,35 +1,35 @@
 import * as bootstrap from '../../test/bootstrap.spec';
 import chai, { expect } from 'chai';
 import 'mocha';
-import { Collection, ICollection, Timestamp } from '../../src';
+import { Collection, ICollection } from '../../src';
 import Post from '../entities/Post';
 import chaiAsPromised from 'chai-as-promised';
 import fixture from '../fixture';
 import Author from '../entities/Author';
 import Comment from '../entities/Comment';
-import { Firestore } from '@google-cloud/firestore';
+import { firestore as firestoreTypes } from 'firebase/app';
 
 chai.use(chaiAsPromised);
 
-describe('[functional] querying data', () => {
+describe('[functional] querying data', (): void => {
   let docId: string;
   let collectionRef: ICollection<Post>;
-  let firestore: Firestore;
-  before(() => {
+  let firestore: firestoreTypes.Firestore;
+  before((): void => {
     bootstrap.start();
     docId = 'hello-world';
     collectionRef = Collection(Post);
     firestore = bootstrap.getFirestore();
   });
-  after(() => {
+  after((): void => {
     bootstrap.reset();
   });
 
   /**
    * Tests with simple collections (root only)
    */
-  describe('simple collection', () => {
-    it('get post should match fixture', async () => {
+  describe('simple collection', (): void => {
+    it('get post should match fixture', async (): Promise<void> => {
       const post = await collectionRef.get(docId);
       expect(post).to.not.be.null;
       if (post) {
@@ -38,7 +38,7 @@ describe('[functional] querying data', () => {
         expect(post.body).to.eql('This is an example post.');
       }
     });
-    it('get post data should match fixture data', async () => {
+    it('get post data should match fixture data', async (): Promise<void> => {
       const post = await collectionRef.get(docId);
       expect(post).to.not.be.null;
       if (post) {
@@ -50,12 +50,12 @@ describe('[functional] querying data', () => {
         });
       }
     });
-    it('get all posts should match fixture data', async () => {
+    it('get all posts should match fixture data', async (): Promise<void> => {
       const fixturesPost = Object.keys(fixture.__collection__.posts.__doc__);
       const posts = await collectionRef.find();
       expect(posts.length).to.eql(fixturesPost.length);
     });
-    it('find with where should match fixture data', async () => {
+    it('find with where should match fixture data', async (): Promise<void> => {
       const posts = await collectionRef.find({
         where: [
           ['title', '==', 'Hello World!']
@@ -70,8 +70,8 @@ describe('[functional] querying data', () => {
   /**
    * Tests with document references
    */
-  describe('with document reference', () => {
-    it('get post w/ author should match fixture data', async () => {
+  describe('with document reference', (): void => {
+    it('get post w/ author should match fixture data', async (): Promise<void> => {
       const post = await collectionRef.get(docId);
       expect(post).to.not.be.null;
       if (post) {
@@ -101,10 +101,10 @@ describe('[functional] querying data', () => {
         });
       }
     });
-    it('get author with array of fetched doc refs to match fixture data', async () => {
+    it('get author with array of fetched doc refs to match fixture data', async (): Promise<void> => {
       const author = await Collection(Author).get('john-doe');
       if (author) {
-        await Promise.all(author.favoritedComments.map(favoritedComment => {
+        await Promise.all(author.favoritedComments.map((favoritedComment): any => {
           return favoritedComment.get();
         }));
         expect(author.toData()).to.eql({
@@ -137,13 +137,13 @@ describe('[functional] querying data', () => {
   /**
    * Tests with subcollections
    */
-  describe('with subcollections', () => {
-    it('comments collection path should match firestore path', () => {
+  describe('with subcollections', (): void => {
+    it('comments collection path should match firestore path', (): void => {
       const commentsRef = collectionRef.doc(docId).collection(Comment);
       expect(commentsRef).to.not.be.null;
       expect(commentsRef.native.path).to.eql(firestore.collection('posts/hello-world/comments').path);
     });
-    it('get all comments should match fixture data', async () => {
+    it('get all comments should match fixture data', async (): Promise<void> => {
       const commentsRef = collectionRef
         .doc('hello-world')
         .collection(Comment);

@@ -98,13 +98,13 @@
 					<a name="query" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> query</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">query&lt;T&gt;<span class="tsd-signature-symbol">(</span>collection<span class="tsd-signature-symbol">: </span><a href="../interfaces/icollection.html" class="tsd-signature-type">ICollection</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, query<span class="tsd-signature-symbol">: </span><a href="../interfaces/icollectionquery.html" class="tsd-signature-type">ICollectionQuery</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">firestore.Query</span></li>
+						<li class="tsd-signature tsd-kind-icon">query&lt;T&gt;<span class="tsd-signature-symbol">(</span>collection<span class="tsd-signature-symbol">: </span><a href="../interfaces/icollection.html" class="tsd-signature-type">ICollection</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, fields<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/ifieldmeta.html" class="tsd-signature-type">IFieldMeta</a><span class="tsd-signature-symbol">&gt;</span>, query<span class="tsd-signature-symbol">: </span><a href="../interfaces/icollectionquery.html" class="tsd-signature-type">ICollectionQuery</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Query</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in utils/QueryBuilder.ts:13</li>
+									<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/utils/QueryBuilder.ts#L14">utils/QueryBuilder.ts:14</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -124,13 +124,16 @@
 									<h5>collection: <a href="../interfaces/icollection.html" class="tsd-signature-type">ICollection</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 								<li>
+									<h5>fields: <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/ifieldmeta.html" class="tsd-signature-type">IFieldMeta</a><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
 									<h5>query: <a href="../interfaces/icollectionquery.html" class="tsd-signature-type">ICollectionQuery</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>The firestorm query</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">firestore.Query</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Query</span></h4>
 						</li>
 					</ul>
 				</section>

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IGeoPointMeta | firebase-firestorm</title>
+	<title>IQuerySnapshot | firebase-firestorm</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,57 +54,66 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="igeopointmeta.html">IGeoPointMeta</a>
+					<a href="iquerysnapshot.html">IQuerySnapshot</a>
 				</li>
 			</ul>
-			<h1>Interface IGeoPointMeta</h1>
+			<h1>Interface IQuerySnapshot&lt;T&gt;</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-type-parameters">
+				<h3>Type parameters</h3>
+				<ul class="tsd-type-parameters">
+					<li>
+						<h4>T<span class="tsd-signature-symbol">: </span><a href="ientity.html" class="tsd-signature-type">IEntity</a></h4>
+					</li>
+				</ul>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="ifieldmeta.html" class="tsd-signature-type">IFieldMeta</a>
-						<ul class="tsd-hierarchy">
-							<li>
-								<span class="target">IGeoPointMeta</span>
-							</li>
-						</ul>
+						<span class="target">IQuerySnapshot</span>
 					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implemented by</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../classes/querysnapshot.html" class="tsd-signature-type">QuerySnapshot</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section tsd-is-inherited">
+						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="igeopointmeta.html#deserialize" class="tsd-kind-icon">deserialize</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="igeopointmeta.html#isarray" class="tsd-kind-icon">is<wbr>Array</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="igeopointmeta.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="igeopointmeta.html#serialize" class="tsd-kind-icon">serialize</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="igeopointmeta.html#todata" class="tsd-kind-icon">to<wbr>Data</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="igeopointmeta.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iquerysnapshot.html#docchanges" class="tsd-kind-icon">doc<wbr>Changes</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iquerysnapshot.html#docs" class="tsd-kind-icon">docs</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iquerysnapshot.html#empty" class="tsd-kind-icon">empty</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iquerysnapshot.html#foreach" class="tsd-kind-icon">for<wbr>Each</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iquerysnapshot.html#metadata" class="tsd-kind-icon">metadata</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iquerysnapshot.html#query" class="tsd-kind-icon">query</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iquerysnapshot.html#size" class="tsd-kind-icon">size</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="deserialize" class="tsd-anchor"></a>
-					<h3>deserialize</h3>
-					<div class="tsd-signature tsd-kind-icon">deserialize<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="docchanges" class="tsd-anchor"></a>
+					<h3>doc<wbr>Changes</h3>
+					<div class="tsd-signature tsd-kind-icon">doc<wbr>Changes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="ifieldmeta.html">IFieldMeta</a>.<a href="ifieldmeta.html#deserialize">deserialize</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/types/field.types.ts#L17">types/field.types.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/types/collection.types.ts#L32">types/collection.types.ts:32</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -112,53 +121,50 @@
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-siganture">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>opts<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">firestore.SnapshotListenOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="documentchange.html" class="tsd-signature-type">DocumentChange</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
 										<h4 class="tsd-parameters-title">Parameters</h4>
 										<ul class="tsd-parameters">
 											<li>
-												<h5>value: <span class="tsd-signature-type">any</span></h5>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> opts: <span class="tsd-signature-type">firestore.SnapshotListenOptions</span></h5>
 											</li>
 										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+										<h4 class="tsd-returns-title">Returns <a href="documentchange.html" class="tsd-signature-type">DocumentChange</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h4>
 									</li>
 								</ul>
 							</li>
 						</ul>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="isarray" class="tsd-anchor"></a>
-					<h3>is<wbr>Array</h3>
-					<div class="tsd-signature tsd-kind-icon">is<wbr>Array<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="docs" class="tsd-anchor"></a>
+					<h3>docs</h3>
+					<div class="tsd-signature tsd-kind-icon">docs<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="ifieldmeta.html">IFieldMeta</a>.<a href="ifieldmeta.html#isarray">isArray</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/types/field.types.ts#L15">types/field.types.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/types/collection.types.ts#L26">types/collection.types.ts:26</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="name" class="tsd-anchor"></a>
-					<h3>name</h3>
-					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="empty" class="tsd-anchor"></a>
+					<h3>empty</h3>
+					<div class="tsd-signature tsd-kind-icon">empty<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="ifieldmeta.html">IFieldMeta</a>.<a href="ifieldmeta.html#name">name</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/types/field.types.ts#L13">types/field.types.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/types/collection.types.ts#L28">types/collection.types.ts:28</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="serialize" class="tsd-anchor"></a>
-					<h3>serialize</h3>
-					<div class="tsd-signature tsd-kind-icon">serialize<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="foreach" class="tsd-anchor"></a>
+					<h3>for<wbr>Each</h3>
+					<div class="tsd-signature tsd-kind-icon">for<wbr>Each<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="ifieldmeta.html">IFieldMeta</a>.<a href="ifieldmeta.html#serialize">serialize</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/types/field.types.ts#L16">types/field.types.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/types/collection.types.ts#L31">types/collection.types.ts:31</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -166,63 +172,71 @@
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-siganture">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>values<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
 										<h4 class="tsd-parameters-title">Parameters</h4>
 										<ul class="tsd-parameters">
 											<li>
-												<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>values: <span class="tsd-signature-type">any</span></h5>
+												<h5>callback: <span class="tsd-signature-type">function</span></h5>
+												<ul class="tsd-parameters">
+													<li class="tsd-parameter-siganture">
+														<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+															<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>doc<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+														</ul>
+														<ul class="tsd-descriptions">
+															<li class="tsd-description">
+																<h4 class="tsd-parameters-title">Parameters</h4>
+																<ul class="tsd-parameters">
+																	<li>
+																		<h5>doc: <span class="tsd-signature-type">T</span></h5>
+																	</li>
+																	<li>
+																		<h5>index: <span class="tsd-signature-type">number</span></h5>
+																	</li>
+																</ul>
+																<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+															</li>
+														</ul>
+													</li>
+												</ul>
 											</li>
 										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 									</li>
 								</ul>
 							</li>
 						</ul>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="todata" class="tsd-anchor"></a>
-					<h3>to<wbr>Data</h3>
-					<div class="tsd-signature tsd-kind-icon">to<wbr>Data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="metadata" class="tsd-anchor"></a>
+					<h3>metadata</h3>
+					<div class="tsd-signature tsd-kind-icon">metadata<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">SnapshotMetadata</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="ifieldmeta.html">IFieldMeta</a>.<a href="ifieldmeta.html#todata">toData</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/types/field.types.ts#L18">types/field.types.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/types/collection.types.ts#L30">types/collection.types.ts:30</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>value: <span class="tsd-signature-type">any</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="type" class="tsd-anchor"></a>
-					<h3>type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <a href="../enums/fieldtypes.html" class="tsd-signature-type">FieldTypes</a></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="query" class="tsd-anchor"></a>
+					<h3>query</h3>
+					<div class="tsd-signature tsd-kind-icon">query<span class="tsd-signature-symbol">:</span> <a href="iquery.html" class="tsd-signature-type">IQuery</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="ifieldmeta.html">IFieldMeta</a>.<a href="ifieldmeta.html#type">type</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/types/field.types.ts#L14">types/field.types.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/types/collection.types.ts#L29">types/collection.types.ts:29</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="size" class="tsd-anchor"></a>
+					<h3>size</h3>
+					<div class="tsd-signature tsd-kind-icon">size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/lmcq/firebase-firestorm/blob/dba4fb3/src/types/collection.types.ts#L27">types/collection.types.ts:27</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -240,26 +254,29 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface">
-						<a href="igeopointmeta.html" class="tsd-kind-icon">IGeo<wbr>Point<wbr>Meta</a>
+					<li class="current tsd-kind-interface tsd-has-type-parameter">
+						<a href="iquerysnapshot.html" class="tsd-kind-icon">IQuery<wbr>Snapshot</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="igeopointmeta.html#deserialize" class="tsd-kind-icon">deserialize</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="iquerysnapshot.html#docchanges" class="tsd-kind-icon">doc<wbr>Changes</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="igeopointmeta.html#isarray" class="tsd-kind-icon">is<wbr>Array</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="iquerysnapshot.html#docs" class="tsd-kind-icon">docs</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="igeopointmeta.html#name" class="tsd-kind-icon">name</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="iquerysnapshot.html#empty" class="tsd-kind-icon">empty</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="igeopointmeta.html#serialize" class="tsd-kind-icon">serialize</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="iquerysnapshot.html#foreach" class="tsd-kind-icon">for<wbr>Each</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="igeopointmeta.html#todata" class="tsd-kind-icon">to<wbr>Data</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="iquerysnapshot.html#metadata" class="tsd-kind-icon">metadata</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="igeopointmeta.html#type" class="tsd-kind-icon">type</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="iquerysnapshot.html#query" class="tsd-kind-icon">query</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="iquerysnapshot.html#size" class="tsd-kind-icon">size</a>
 							</li>
 						</ul>
 					</li>

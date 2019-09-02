@@ -1,9 +1,10 @@
-import * as firestore from '@google-cloud/firestore';
+import { firestore } from 'firebase/app';
 import store, { getRepository } from './store';
 import { ICollectionQuery, ICollection, IDocumentRef, WriteTypes } from './types';
 import { QueryBuilder, FirestoreSerializer } from './utils';
 import DocumentRef from './fields/DocumentRef';
 import Entity from './Entity';
+import Query from './Query';
 
 /**
  * Firestorm representation of a collection reference.
@@ -160,7 +161,7 @@ class Collection <T extends Entity, P extends Entity> implements ICollection<T, 
   /**
    * Finds a list of documents based on a criteria.
    * @param query The query parameters.
-   * 
+   * @deprecated since v1.1, use query() method to build queries instead.
    * @returns A list of entities matching the criteria.
    */
   public find(query? : ICollectionQuery<T>): Promise<T[]> {
@@ -191,6 +192,20 @@ class Collection <T extends Entity, P extends Entity> implements ICollection<T, 
       });
     });
   }
+
+  /**
+   * Entry point for building queries.
+   */
+  public query(): Query<T> {
+    const fields = getRepository(this._Entity.prototype.constructor.name).fields;
+    return new Query(
+      this._Entity,
+      this,
+      fields,
+      this._native,
+    );
+  }
+
 }
 
 /**

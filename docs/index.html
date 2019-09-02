@@ -65,39 +65,56 @@
 				<a href="#firebase-firestorm-for-typescript" id="firebase-firestorm-for-typescript" style="color: inherit; text-decoration: none;">
 					<h1>Firebase Firestorm for Typescript</h1>
 				</a>
-				<p><a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a></p>
-				<p>Firestorm is an <a href="https://en.wikipedia.org/wiki/Object-relational_mapping">ORM</a> for <a href="https://firebase.google.com/docs/firestore">firestore</a> which can be used with Typescript.</p>
+				<p><a href="https://travis-ci.org/lmcq/firebase-firestorm"><img src="https://travis-ci.org/lmcq/firebase-firestorm.svg?branch=master" alt="Build Status"></a>
+					<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+					<a href="https://www.codacy.com/app/lmcq/firebase-firestorm?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lmcq/firebase-firestorm&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/0055aad0e1244ebea87b08af2eed7906" alt="Codacy Badge"></a>
+				<a href="https://www.codacy.com/app/lmcq/firebase-firestorm?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lmcq/firebase-firestorm&amp;utm_campaign=Badge_Coverage"><img src="https://api.codacy.com/project/badge/Coverage/0055aad0e1244ebea87b08af2eed7906" alt="Codacy Badge"></a></p>
+				<p>Firestorm is an <a href="https://en.wikipedia.org/wiki/Object-relational_mapping">ORM</a>
+					for <a href="https://firebase.google.com/docs/firestore">firestore</a> which can be used
+				with Typescript.</p>
+				<p><strong>This library currently only supports the <a href="https://github.com/firebase/firebase-js-sdk">client Firebase SDK</a>.</strong></p>
 				<a href="#contents" id="contents" style="color: inherit; text-decoration: none;">
 					<h2>Contents</h2>
 				</a>
 				<ul>
-					<li><a href="#requirements">Requirements</a></li>
-					<li><a href="#installation">Installation</a></li>
-					<li><a href="#usage">Usage</a><ul>
+					<li><p><a href="#requirements">Requirements</a></p>
+					</li>
+					<li><p><a href="#installation">Installation</a></p>
+					</li>
+					<li><p><a href="#usage">Usage</a></p>
+						<ul>
 							<li><a href="#getting-started">Getting Started</a></li>
 							<li><a href="#custom-data-types">Custom Data Types</a></li>
 							<li><a href="#initialization-options">Initialization Options</a></li>
 						</ul>
 					</li>
-					<li><a href="#important-gotchas">Important Gotcha&#39;s</a></li>
-					<li><a href="#limitations">Limitations</a></li>
-					<li><a href="#development">Development</a><ul>
+					<li><p><a href="#important-gotchas">Important Gotcha&#39;s</a></p>
+					</li>
+					<li><p><a href="#limitations">Limitations</a></p>
+					</li>
+					<li><p><a href="#development">Development</a></p>
+						<ul>
 							<li><a href="#setup">Setup</a></li>
 							<li><a href="#testing">Testing</a></li>
 						</ul>
 					</li>
-					<li><a href="#contributing">Contributing</a></li>
-					<li><a href="#license">License</a></li>
+					<li><p><a href="#contributing">Contributing</a></p>
+					</li>
+					<li><p><a href="#license">License</a></p>
+					</li>
 				</ul>
 				<a href="#requirements" id="requirements" style="color: inherit; text-decoration: none;">
 					<h2>Requirements</h2>
 				</a>
-				<p>Firestorm relies on using Typescript&#39;s <a href="https://www.typescriptlang.org/docs/handbook/decorators.html">experimental decorators</a> for defining your models. Please ensure you have the following in your <code>tsconfig.json</code>:</p>
+				<p>Firestorm relies on using Typescript&#39;s
+					<a href="https://www.typescriptlang.org/docs/handbook/decorators.html">experimental decorators</a>
+					for defining your models. Please ensure you have the following in your <code>tsconfig.json</code>
+				(ES5 is minimum target):</p>
 				<pre><code class="language-json">{
-  &quot;compilerOptions&quot;: {
-    &quot;target&quot;: &quot;ES5&quot;, /* or greater */
-    &quot;experimentalDecorators&quot;: true,
-    &quot;emitDecoratorMetadata&quot;: true,
+  <span class="hljs-attr">"compilerOptions"</span>: {
+    <span class="hljs-attr">"target"</span>: <span class="hljs-string">"ES5"</span>,
+    <span class="hljs-attr">"experimentalDecorators"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"emitDecoratorMetadata"</span>: <span class="hljs-literal">true</span>,
   }
 }</code></pre>
 				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
@@ -110,11 +127,14 @@
 				<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
 					<h3>Getting Started</h3>
 				</a>
-				<p>In this section, we will walk you through an example of how a basic blogging database might look using posts, comments and authors.</p>
+				<p>In this section, we will walk you through an example of how a basic blogging
+				database might look using posts, comments and authors.</p>
 				<a href="#1-initialize-firestorm" id="1-initialize-firestorm" style="color: inherit; text-decoration: none;">
 					<h4>1. Initialize firestorm</h4>
 				</a>
-				<p>Call <code>firestorm.initialize(firestore, options?)</code> as soon as you intialize your firestore app. See <a href="###-initialization-options">intialization options</a> for more information about intiailizing firestorm.</p>
+				<p>Call <code>firestorm.initialize(firestore, options?)</code> as soon as you initialize
+					your firestore app. See <a href="###-initialization-options">intialization options</a>
+				for more information about intiailizing firestorm.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> firestorm <span class="hljs-keyword">from</span> <span class="hljs-string">'firebase-firestorm'</span>;
 ...
 <span class="hljs-keyword">const</span> firestore = firebase.initializeApp(...);
@@ -123,11 +143,13 @@ firestorm.initialize(firestore, <span class="hljs-comment">/* options */</span>)
 				<a href="#2-defining-root-collections" id="2-defining-root-collections" style="color: inherit; text-decoration: none;">
 					<h4>2. Defining root collections</h4>
 				</a>
-				<p>Here we have a class representing a <code>posts</code> collection. Entity classes are typically non-pluralized as they represent a single document from that collection. To define a root collection you must:</p>
+				<p>Here we have a class representing a <code>posts</code> collection. Entity classes are
+					typically non-pluralized as they represent a single document from that
+				collection. To define a root collection you must:</p>
 				<ul>
 					<li>Extend from the <code>Entity</code> class.</li>
 					<li>Annotate your class with <code>@rootCollection(opts: ICollectionConfig)</code>.</li>
-					<li>Declare a series of fields, annoted with <code>@field(opts: IFieldConfig)</code>.</li>
+					<li>Declare a series of fields, annotated with <code>@field(opts: IFieldConfig)</code>.</li>
 				</ul>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Entity, rootCollection, field } <span class="hljs-keyword">from</span> <span class="hljs-string">'firebase-firestorm'</span>;
 
@@ -145,9 +167,12 @@ firestorm.initialize(firestore, <span class="hljs-comment">/* options */</span>)
 					<h4>3. Defining subcollections</h4>
 				</a>
 				<blockquote>
-					<p>Each of your models, whether they represent a root collection or subcollection must extend from the <code>Entity</code> class provided.</p>
+					<p>Each of your models, whether they represent a root collection or
+					subcollection must extend from the <code>Entity</code> class provided.</p>
 				</blockquote>
-				<p>Now we want documents in the <code>posts</code> collection to have a subcollection of <code>comments</code>. First, we need to create as class for the comments. Notice how we do not annotate the class with <code>@rootCollection</code>.</p>
+				<p>Now we want documents in the <code>posts</code> collection to have a subcollection
+					of <code>comments</code>. First, we need to create a class for the comments. Notice
+				how we do not annotate the class with <code>@rootCollection</code>.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Entity, rootCollection, field } <span class="hljs-keyword">from</span> <span class="hljs-string">'firebase-firestorm'</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> Comment <span class="hljs-keyword">extends</span> Entity {
@@ -165,7 +190,6 @@ firestorm.initialize(firestore, <span class="hljs-comment">/* options */</span>)
   name: <span class="hljs-string">'posts'</span>,
 })
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> Post <span class="hljs-keyword">extends</span> Entity {
-  ...
   <span class="hljs-meta">@subCollection</span>({
     name: <span class="hljs-string">'comments'</span>,
     entity: Comment, <span class="hljs-comment">// we must define the entity class due to limitations in Typescript's reflection capabilities. Progress should be made on this issue in future releases.</span>
@@ -176,7 +200,8 @@ firestorm.initialize(firestore, <span class="hljs-comment">/* options */</span>)
 				<a href="#4-defining-document-references" id="4-defining-document-references" style="color: inherit; text-decoration: none;">
 					<h4>4. Defining document references</h4>
 				</a>
-				<p>Finally we want documents in the <code>posts</code> collection to reference an author in an <code>authors</code> collection (another root collection). First, we define the <code>Author</code> entity:</p>
+				<p>Finally we want documents in the <code>posts</code> collection to reference an author in
+				an <code>authors</code> collection (another root collection). First, we define the <code>Author</code> entity:</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Entity, rootCollection, field } <span class="hljs-keyword">from</span> <span class="hljs-string">'firebase-firestorm'</span>;
 
 <span class="hljs-meta">@rootCollection</span>({
@@ -194,7 +219,6 @@ firestorm.initialize(firestore, <span class="hljs-comment">/* options */</span>)
   name: <span class="hljs-string">'posts'</span>,
 })
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> Post <span class="hljs-keyword">extends</span> Entity {
-  ...
   <span class="hljs-meta">@documentRef</span>({
     name: <span class="hljs-string">'author'</span>,
     entity: Author, <span class="hljs-comment">// we must define the entity class due to limitations in Typescript's reflection capabilities. Progress should be made on this issue in future releases.</span>
@@ -205,19 +229,20 @@ firestorm.initialize(firestore, <span class="hljs-comment">/* options */</span>)
 				<a href="#5-queryingupdating-data" id="5-queryingupdating-data" style="color: inherit; text-decoration: none;">
 					<h4>5. Querying/updating data</h4>
 				</a>
-				<p>Now we&#39;ve built our model, we&#39;re ready to start querying. Calling <code>Collection(entity : IEntity)</code> will return a list of methods use can use to manipulate the data.</p>
+				<p>Now we&#39;ve built our model, we&#39;re ready to start querying. Calling
+					<code>Collection(entity : IEntity)</code> will return a list of methods use can
+				use to manipulate the data.</p>
 				<a href="#getting-a-document" id="getting-a-document" style="color: inherit; text-decoration: none;">
 					<h5>Getting a document</h5>
 				</a>
-				<pre><code class="language-typescript">...
-<span class="hljs-keyword">const</span> post = Collection(Post).get(<span class="hljs-string">'post-1'</span>).then(<span class="hljs-function">(<span class="hljs-params">post : Post</span>) =&gt;</span> {
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> post = Collection(Post).get(<span class="hljs-string">'post-1'</span>).then(<span class="hljs-function">(<span class="hljs-params">post : Post</span>) =&gt;</span> {
   <span class="hljs-built_in">console</span>.log(post);
-});
-...</code></pre>
+});</code></pre>
 				<a href="#getting-a-subcollection" id="getting-a-subcollection" style="color: inherit; text-decoration: none;">
 					<h5>Getting a subcollection</h5>
 				</a>
-				<p>In our example <code>Comment</code> is a subcollection of <code>Post</code>. You can get subcollections from a retrieved document, or a document reference.</p>
+				<p>In our example <code>Comment</code> is a subcollection of <code>Post</code>. You can get
+				subcollections from a retrieved document, or a document reference.</p>
 				<pre><code class="language-typescript"><span class="hljs-comment">// Comment subcollection from document.</span>
 <span class="hljs-keyword">const</span> post = Collection(Post).get(<span class="hljs-string">'post-1'</span>).then(<span class="hljs-function">(<span class="hljs-params">post : Post</span>) =&gt;</span> {
   <span class="hljs-keyword">const</span> commentCollection = post.collection(Post);
@@ -229,47 +254,87 @@ firestorm.initialize(firestore, <span class="hljs-comment">/* options */</span>)
 				<a href="#querying-data" id="querying-data" style="color: inherit; text-decoration: none;">
 					<h5>Querying data</h5>
 				</a>
-				<p>You can use the <code>find(query : ICollectionQuery)</code> method to query data. A full list of options are available in the <a href="">docs</a>, but they are essentially the same as what is available with firestore.</p>
-				<pre><code class="language-typescript">  <span class="hljs-keyword">const</span> posts = Collection(Post).find({
-    where: [
-      [<span class="hljs-string">'title'</span>, <span class="hljs-string">'=='</span>, <span class="hljs-string">'Example Title'</span>],
-      ...
-    ],
-  });</code></pre>
+				<p>Calling <code>query()</code> on a collection will allow you to build queries in a <a href="https://firebase.google.com/docs/firestore/query-data/queries">similar fashion to the standard Firestore SDK</a>. You can build a query by chaining together methods, and finally calling the <code>get()</code> method to fetch the result. Omitting filters after the <code>query()</code> method will return all results from a collection.</p>
+				<pre><code class="language-typescript"><span class="hljs-comment">// Build the query.</span>
+<span class="hljs-keyword">const</span> query = Collection(Post)
+  .query()
+  .where(<span class="hljs-string">'title'</span>, <span class="hljs-string">'=='</span>, <span class="hljs-string">'Example Title'</span>);
+
+<span class="hljs-comment">// Fetch and manipulate the result.</span>
+query.get().then((snapshot): DocumentSnapshot&lt;Post&gt; =&gt; {
+  <span class="hljs-keyword">const</span> post = snapshot.doc;
+  ...
+});</code></pre>
 				<a href="#creating-documents" id="creating-documents" style="color: inherit; text-decoration: none;">
 					<h5>Creating documents</h5>
 				</a>
-				<pre><code class="language-typescript">...
-  <span class="hljs-keyword">const</span> post = <span class="hljs-keyword">new</span> Post();
-  post.id = <span class="hljs-string">'post-1'</span>; <span class="hljs-comment">// id is optional, if it is not defined it will be generated by firestore.</span>
-  post.title = <span class="hljs-string">'Untitled'</span>;
-  <span class="hljs-keyword">let</span> savedPost : Post;
-  Collection(Post).create(post).then(<span class="hljs-function">(<span class="hljs-params">_savedPost : Post</span>) =&gt;</span> {
-    savedPost = _savedPost;
-  });
-...</code></pre>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> post = <span class="hljs-keyword">new</span> Post();
+post.id = <span class="hljs-string">'post-1'</span>; <span class="hljs-comment">// id is optional, if it is not defined it will be generated by firestore.</span>
+post.title = <span class="hljs-string">'Untitled'</span>;
+<span class="hljs-keyword">let</span> savedPost : Post;
+Collection(Post).create(post).then(<span class="hljs-function">(<span class="hljs-params">_savedPost : Post</span>) =&gt;</span> {
+  savedPost = _savedPost;
+});</code></pre>
 				<a href="#updating-documents" id="updating-documents" style="color: inherit; text-decoration: none;">
 					<h5>Updating documents</h5>
 				</a>
-				<pre><code class="language-typescript">...
-  <span class="hljs-keyword">const</span> post = <span class="hljs-keyword">new</span> Post();
-  post.id = <span class="hljs-string">'post-1'</span>; <span class="hljs-comment">// id is required.</span>
-  post.title = <span class="hljs-string">'Untitled'</span>;
-  <span class="hljs-keyword">let</span> savedPost : Post;
-  Collection(Post).update(post).then(<span class="hljs-function">(<span class="hljs-params">_savedPost : Post</span>) =&gt;</span> {
-    savedPost = _savedPost;
-  });
-...</code></pre>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> post = <span class="hljs-keyword">new</span> Post();
+post.id = <span class="hljs-string">'post-1'</span>; <span class="hljs-comment">// id is required.</span>
+post.title = <span class="hljs-string">'Untitled'</span>;
+<span class="hljs-keyword">let</span> savedPost : Post;
+Collection(Post).update(post).then(<span class="hljs-function">(<span class="hljs-params">_savedPost: Post</span>) =&gt;</span> {
+  savedPost = _savedPost;
+});</code></pre>
 				<a href="#removing-documents" id="removing-documents" style="color: inherit; text-decoration: none;">
 					<h5>Removing documents</h5>
 				</a>
-				<pre><code class="language-typescript">...
-  Collection(Post).remove(<span class="hljs-string">'post-id'</span>).then(...);
+				<pre><code class="language-typescript">Collection(Post).remove(<span class="hljs-string">'post-id'</span>).then(...);</code></pre>
+				<a href="#5-realtime-updates" id="5-realtime-updates" style="color: inherit; text-decoration: none;">
+					<h4>5. Realtime Updates</h4>
+				</a>
+				<p>You can set up listeners for changes on either a single document, or a group of documents for a query. This is done a <a href="https://firebase.google.com/docs/firestore/query-data/listen">similar way to the standard Firebase SDK</a>.</p>
+				<a href="#listening-to-document-updates" id="listening-to-document-updates" style="color: inherit; text-decoration: none;">
+					<h5>Listening to document updates</h5>
+				</a>
+				<p>You can attach a listener to a single document reference by using the <code>onSnapshot(callback)</code> method.</p>
+				<pre><code class="language-typescript">Collection(Post).doc(<span class="hljs-string">'post-id'</span>).onSnapshot(
+  (snapshot): DocumentSnapshot&lt;Post&gt; =&gt; {
+    <span class="hljs-keyword">const</span> post: Post = snapshot.doc;
+  }
+);
 ...</code></pre>
+				<p>The callback function will executed once with the initial snapshot payload, and then for any subsequent updates to that document.</p>
+				<a href="#listening-to-a-collection-or-query" id="listening-to-a-collection-or-query" style="color: inherit; text-decoration: none;">
+					<h5>Listening to a collection (or query)</h5>
+				</a>
+				<p>You can attach a listener to a group of documents in a collection by using the <code>onSnapshot(callback)</code> method on a collection query.</p>
+				<pre><code class="language-typescript">Collection(Post).query().onSnapshot(
+  (snapshot): QuerySnapshot&lt;Post&gt; =&gt; {
+    <span class="hljs-keyword">const</span> posts: Post[] = snapshot.docs;
+  }
+);
+
+<span class="hljs-comment">// or</span>
+
+Collection(Post)
+  .query()
+  .where(<span class="hljs-string">'title'</span>, <span class="hljs-string">'=='</span>, <span class="hljs-string">'Example Title'</span>)
+  .onSnapshot(
+    (snapshot): QuerySnapshot&lt;Post&gt; =&gt; {
+      <span class="hljs-keyword">const</span> posts: Post[] = snapshot.docs;
+    }
+  );</code></pre>
+				<p>The callback function will executed once with the initial snapshot payload, and then for any subsequent updates to that query. As per the Firebase SDK, you call see the <a href="https://firebase.google.com/docs/firestore/query-data/listen#view_changes_between_snapshots">document changes in each snapshot</a> using the <code>snapshot.docChanges()</code> method.</p>
 				<a href="#6-formatting-data" id="6-formatting-data" style="color: inherit; text-decoration: none;">
 					<h4>6. Formatting data</h4>
 				</a>
-				<p>An instance of entity maybe contain properties such as subcollections which you do not wish to include if, for example, you are building a REST API. Calling the <code>toData()</code> method on an instance of an entity will produce a plain JSON object containing just primitive data, nested JSON objects, and document reference which have already been retrieved using the <code>.get()</code> method. For example:</p>
+				<p>An instance of entity maybe contain properties such as
+					subcollections which you do not wish to include if, for example,
+					you are building a REST API. Calling the <code>toData()</code> method on
+					an instance of an entity will produce a plain JSON object
+					containing just primitive data, nested JSON objects, and
+					document reference which have already been retrieved using
+				the <code>.get()</code> method. For example:</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Collection } <span class="hljs-keyword">from</span> <span class="hljs-string">'firebase-firestorm'</span>;
 <span class="hljs-keyword">import</span> Author <span class="hljs-keyword">from</span> <span class="hljs-string">'./Author'</span>;
 <span class="hljs-keyword">import</span> Post <span class="hljs-keyword">from</span> <span class="hljs-string">'./Post'</span>;
@@ -299,15 +364,16 @@ Collection(Post).get(<span class="hljs-string">'post-1'</span>).then(<span class
     }
    */</span>
  });
-});
-</code></pre>
+});</code></pre>
 				<a href="#custom-data-types" id="custom-data-types" style="color: inherit; text-decoration: none;">
 					<h3>Custom Data Types</h3>
 				</a>
 				<a href="#arrays" id="arrays" style="color: inherit; text-decoration: none;">
 					<h4>Arrays</h4>
 				</a>
-				<p>Firestore documents can contain arrays of strings, numbers, objects, etc. Defining arrays in Firestorm is as simple as assigning properties as array types in your <code>Entity</code> files. For example:</p>
+				<p>Firestore documents can contain arrays of strings, numbers, objects,
+					etc. Defining arrays in Firestorm is as simple as assigning properties
+				as array types in your <code>Entity</code> files. For example:</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">class</span> Example <span class="hljs-keyword">extends</span> Entity {
   <span class="hljs-meta">@field</span>({ name: <span class="hljs-string">'example_property_1'</span> })
   property1!: <span class="hljs-built_in">string</span>[];
@@ -318,8 +384,9 @@ Collection(Post).get(<span class="hljs-string">'post-1'</span>).then(<span class
 				<a href="#nested-data" id="nested-data" style="color: inherit; text-decoration: none;">
 					<h4>Nested Data</h4>
 				</a>
-				<p>Firestore documents can contains nested objects (or maps). For a nested object, you need to create a new class to represent that object, and add a property with that class in your <code>Entity</code>, wrapped
-				with the <code>@map</code> decorator.</p>
+				<p>Firestore documents can contains nested objects (or maps). For a nested
+					object, you need to create a new class to represent that object, and add
+				a property with that class in your <code>Entity</code>, wrapped with the <code>@map</code> decorator.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">class</span> Example <span class="hljs-keyword">extends</span> Entity {
   <span class="hljs-meta">@map</span>({ name: <span class="hljs-string">'nested_object'</span> })
   nestedObject!: Nested;
@@ -339,7 +406,8 @@ example.nestedObject = nested;
 				<a href="#geopoints" id="geopoints" style="color: inherit; text-decoration: none;">
 					<h4>Geopoints</h4>
 				</a>
-				<p>Geopoints store locational data and can be used a field. We have a wrapper class for firestore&#39;s GeoPoint which basically serves the same functionality.</p>
+				<p>Geopoints store locational data and can be used as fields. We have a wrapper
+				class for firestore&#39;s GeoPoint which basically serves the same functionality.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">class</span> Example <span class="hljs-keyword">extends</span> Entity {
   <span class="hljs-meta">@geopoint</span>({
     name: <span class="hljs-string">'geopoint_property'</span>,
@@ -354,7 +422,10 @@ example.nestedObject = nested;
 				<a href="#timestamps" id="timestamps" style="color: inherit; text-decoration: none;">
 					<h4>Timestamps</h4>
 				</a>
-				<p>You can represent date &amp; time data in your <code>Entity</code> files. Like geopoints, our timestamp representation is essentially a wrapper of firestore&#39;s. You can set the options for the field to <code>updateOnWrite</code> which uses the server timestamp when creating or updating documents, or <code>updateOnCreate</code> or <code>updateOnUpdate</code>.</p>
+				<p>You can represent date &amp; time data in your <code>Entity</code> files. Like geopoints,
+					our timestamp representation is essentially a wrapper of firestore&#39;s. You
+					can set the options for the field to <code>updateOnWrite</code> which uses the server
+				timestamp when creating or updating documents, or <code>updateOnCreate</code> or <code>updateOnUpdate</code>.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">class</span> Example <span class="hljs-keyword">extends</span> Entity {
   <span class="hljs-meta">@timestamp</span>({
     name: <span class="hljs-string">'timestamp_property'</span>,
@@ -365,7 +436,8 @@ example.nestedObject = nested;
 				<a href="#initialization-options" id="initialization-options" style="color: inherit; text-decoration: none;">
 					<h3>Initialization Options</h3>
 				</a>
-				<p><code>firestorm.intialize({ ...opts : IFireormConfig })</code> can be called with the following options:</p>
+				<p><code>firestorm.intialize({ ...opts : IFireormConfig })</code> can be called
+				with the following options:</p>
 				<table>
 					<thead>
 						<tr>
@@ -384,18 +456,24 @@ example.nestedObject = nested;
 					<h2>Important Gotcha&#39;s</h2>
 				</a>
 				<ul>
-					<li>All files for root collections, subcollections and nested maps must have a unique class name due to the way the metadata storage hooks everything up. We&#39;re currently looking for a way to resolve this issue.</li>
-					<li>Make sure fields such as geopoints, timestamps and document reference&#39;s have the <code>I</code> infront of the type, e.g. <code>IDocumentRef</code>, <code>ITimestamp</code>, <code>IGeoPoint</code>. </li>
+					<li><p>All files for root collections, subcollections and nested maps
+							must have a unique class name due to the way the metadata storage
+							hooks everything up. We&#39;re currently looking for a way to resolve
+						this issue.</p>
+					</li>
+					<li><p>Make sure fields such as geopoints, timestamps and document
+							reference&#39;s have the <code>I</code> infront of the type, e.g. <code>IDocumentRef</code>,
+						<code>ITimestamp</code>, <code>IGeoPoint</code>.</p>
+					</li>
 				</ul>
 				<a href="#limitations" id="limitations" style="color: inherit; text-decoration: none;">
 					<h2>Limitations</h2>
 				</a>
 				<ul>
-					<li>Listening to document updates using snapshots is currently unsupported.</li>
 					<li>Transactions and batched writes are currently unsupported.</li>
-					<li>Offline persitences is unsupported.</li>
 				</ul>
-				<p>If you would like to help resolve these issues, feel free to make a a <a href="#pull-requests">pull request</a>.</p>
+				<p>If you would like to help resolve these issues, feel free
+				to make a a <a href="#pull-requests">pull request</a>.</p>
 				<a href="#development" id="development" style="color: inherit; text-decoration: none;">
 					<h2>Development</h2>
 				</a>
@@ -403,27 +481,34 @@ example.nestedObject = nested;
 					<h3>Setup</h3>
 				</a>
 				<ol>
-					<li>Clone the rpeo</li>
-					<li>Install dependencies<pre><code class="language-bash">$ <span class="hljs-built_in">cd</span> firebase-firestorm
-$ npm install</code></pre>
-					</li>
+					<li>Clone the repo.</li>
+					<li>Install dependencies.</li>
 				</ol>
+				<pre><code class="language-bash"><span class="hljs-built_in">cd</span> firebase-firestorm
+npm install</code></pre>
 				<a href="#testing" id="testing" style="color: inherit; text-decoration: none;">
 					<h3>Testing</h3>
 				</a>
-				<p>The testing script looks for <code>*.spec.ts</code> files in the <code>src</code> and <code>test</code> directory.</p>
-				<pre><code class="language-bash">$ npm <span class="hljs-built_in">test</span></code></pre>
+				<p>The testing script looks for <code>*.spec.ts</code> files in the <code>src</code>
+				and <code>test</code> directory.</p>
+				<pre><code class="language-bash">npm <span class="hljs-built_in">test</span></code></pre>
 				<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
 					<h2>Contributing</h2>
 				</a>
 				<a href="#found-a-bug" id="found-a-bug" style="color: inherit; text-decoration: none;">
 					<h3>Found a bug?</h3>
 				</a>
-				<p>Please report any bugs you have found submitting an issue to our Github repository, after ensuring the issue doesn&#39;t already exist.  Alternatively, you can make a pull request with a fix.</p>
+				<p>Please report any bugs you have found submitting an issue to our Github
+					repository, after ensuring the issue doesn&#39;t already exist. Alternatively,
+				you can make a pull request with a fix.</p>
 				<a href="#pull-requests" id="pull-requests" style="color: inherit; text-decoration: none;">
 					<h3>Pull Requests</h3>
 				</a>
-				<p>If you would like to help add or a feature or fix a bug, you can do so by making a pull request. The project uses <a href="https://www.conventionalcommits.org">Conventional Commits</a>, so please make sure you follow the spec when making PRs. You must also include relevant tests.</p>
+				<p>If you would like to help add or a feature or fix a bug, you can do so
+					by making a pull request. The project uses
+					<a href="https://www.conventionalcommits.org">Conventional Commits</a>, so please
+					make sure you follow the spec when making PRs. You must also
+				include relevant tests.</p>
 				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
 					<h2>License</h2>
 				</a>
@@ -458,6 +543,9 @@ $ npm install</code></pre>
 					<li class=" tsd-kind-class tsd-has-type-parameter tsd-is-not-exported">
 						<a href="classes/documentref.html" class="tsd-kind-icon">Document<wbr>Ref</a>
 					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/documentsnapshot.html" class="tsd-kind-icon">Document<wbr>Snapshot</a>
+					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/entity.html" class="tsd-kind-icon">Entity</a>
 					</li>
@@ -470,11 +558,26 @@ $ npm install</code></pre>
 					<li class=" tsd-kind-class">
 						<a href="classes/geopoint.html" class="tsd-kind-icon">Geo<wbr>Point</a>
 					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/query.html" class="tsd-kind-icon">Query</a>
+					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/querybuilder.html" class="tsd-kind-icon">Query<wbr>Builder</a>
 					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/querysnapshot.html" class="tsd-kind-icon">Query<wbr>Snapshot</a>
+					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/timestamp.html" class="tsd-kind-icon">Timestamp</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/documentchange.html" class="tsd-kind-icon">Document<wbr>Change</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/firestormdata.html" class="tsd-kind-icon">Firestorm<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/geopointdata.html" class="tsd-kind-icon">Geo<wbr>Point<wbr>Data</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/icollection.html" class="tsd-kind-icon">ICollection</a>
@@ -493,6 +596,9 @@ $ npm install</code></pre>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/idocumentrefmeta.html" class="tsd-kind-icon">IDocument<wbr>Ref<wbr>Meta</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/idocumentsnapshot.html" class="tsd-kind-icon">IDocument<wbr>Snapshot</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/ientity.html" class="tsd-kind-icon">IEntity</a>
@@ -526,6 +632,12 @@ $ npm install</code></pre>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/igeopointmeta.html" class="tsd-kind-icon">IGeo<wbr>Point<wbr>Meta</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/iquery.html" class="tsd-kind-icon">IQuery</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/iquerysnapshot.html" class="tsd-kind-icon">IQuery<wbr>Snapshot</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/irepository.html" class="tsd-kind-icon">IRepository</a>

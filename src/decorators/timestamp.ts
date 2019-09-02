@@ -1,4 +1,4 @@
-import * as firestore from '@google-cloud/firestore';
+import { firestore } from 'firebase/app';
 import { FieldTypes, ITimestampConfig, WriteTypes, ITimestampMeta } from '../types';
 import FieldUtils from '../utils/FieldUtils';
 import { getOrCreateRepository } from '../store';

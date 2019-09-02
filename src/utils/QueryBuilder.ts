@@ -1,10 +1,11 @@
-import * as firestore from '@google-cloud/firestore';
+import { firestore } from 'firebase/app';
 import { IEntity, ICollectionQuery, ICollection, IFieldMeta } from '../types';
 
 /**
  * Utility functions to build firestore-compatiable queries.
  */
 export default class QueryBuilder {
+
   /**
    * Converts a firestom query into a firestore query.
    * @param collectionRef The native firestore collection reference.

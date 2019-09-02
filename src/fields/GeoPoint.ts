@@ -1,4 +1,4 @@
-import * as firestore from '@google-cloud/firestore';
+import { firestore } from 'firebase/app';
 import { IGeoPoint } from '../types';
 
 /**
