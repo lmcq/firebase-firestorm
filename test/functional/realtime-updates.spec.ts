@@ -37,7 +37,8 @@ describe('[functional] realtime updates', (): void => {
       expect(result.ref).to.eql(result.doc.ref);
       expect(result.metadata).to.not.be.null.and.not.be.undefined;
     });
-    it('should receive updates', async (): Promise<void> => {
+    it('should receive updates', async function(): Promise<void> {
+      this.timeout(10000);
       const result: IDocumentSnapshot<Post> = await new Promise(async (resolve): Promise<void> => {
         let receivedFirst = false
         documentListener = post.ref.onSnapshot((snapshot): void => {
@@ -54,7 +55,7 @@ describe('[functional] realtime updates', (): void => {
           if (updatedPost) {
             post = updatedPost;
           }
-        }, 100);
+        }, 1000);
       });
       expect(result.doc.id).to.eql(post.id);
       expect(result.exists).to.equal(true);
