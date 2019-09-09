@@ -95,7 +95,7 @@ export default function (fieldConfig: IFieldConfig): Function {
     const field = FieldUtils.configure(
       fieldConfig,
       key,
-      type(),
+      new type(),
       FieldTypes.Map);
     const repository = getOrCreateRepository(target.constructor.name);
     repository.fields.set(key, field);
