@@ -6,7 +6,7 @@ import { getOrCreateRepository } from '../store';
  * @param config The subcollection configuration.
  */
 export default (config: ISubCollectionConfig): Function => {
-  return (target: IEntity, key: string): void => {
+  return (target: IEntity): void => {
     // Get the parent based on the Entity class.
     const parentRepository = getOrCreateRepository(target.constructor.name);
     const { entity, name } = config;
@@ -16,6 +16,6 @@ export default (config: ISubCollectionConfig): Function => {
     repository.collectionConfig = { entity, name };
     repository.parent = parentRepository;
     repository.entity = entity;
-    parentRepository.subcollections.set(key, repository);
+    parentRepository.subcollections.set(name, repository);
   };
 };
