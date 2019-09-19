@@ -391,6 +391,16 @@ const example = new Example();
 example.nestedObject = nested;
 ```
 
+**Important**: If your is nested data is an array you must provide the 'entity'
+option in the configuration.
+
+```typescript
+class Nested {
+  @map({ name: 'nested_array', entity: Nested })
+  nestedObject: Nested[];
+}
+```
+
 #### Geopoints
 
 Geopoints store locational data and can be used as fields. We have a wrapper

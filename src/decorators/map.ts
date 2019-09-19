@@ -1,4 +1,4 @@
-import { IFieldConfig, FieldTypes, IFieldMeta, WriteTypes, IEntity, FirestormData } from '../types';
+import { FieldTypes, IFieldMeta, WriteTypes, IEntity, FirestormData, IFieldMapConfig, IFieldMapMeta } from '../types';
 import FieldUtils from '../utils/FieldUtils';
 import { getOrCreateRepository } from '../store';
 
@@ -89,14 +89,18 @@ const toData = (
  * Registers a new map with firestorm.
  * @param fieldConfig The field configuration
  */
-export default function (fieldConfig: IFieldConfig): Function {
+export default function (fieldConfig: IFieldMapConfig): Function {
   return function (target: any, key: string): void {
     const type = Reflect.getMetadata('design:type', target, key);
     const field = FieldUtils.configure(
       fieldConfig,
       key,
       new type(),
-      FieldTypes.Map);
+      FieldTypes.Map) as IFieldMapMeta;
+    if (field.isArray && !fieldConfig.entity) {
+      throw new Error(`Map arrays must be provided with an entity in ${target}[${key}]`);
+    }
+    field.entity = fieldConfig.entity || type;
     const repository = getOrCreateRepository(target.constructor.name);
     repository.fields.set(key, field);
     const childRepository = getOrCreateRepository(type.name);
@@ -108,7 +112,7 @@ export default function (fieldConfig: IFieldConfig): Function {
       return serialize(field.isArray, value, childRepository.fields, writeType);
     };
     field.deserialize = (value: any): Record<string, any> | Record<string, any>[] => {
-      return deserialize(field.isArray, value, childRepository.fields, type);
+      return deserialize(field.isArray, value, childRepository.fields, field.entity);
     };
     field.toData = (value: any): FirestormData | FirestormData[] => {
       return toData(field.isArray, value, childRepository.fields);
