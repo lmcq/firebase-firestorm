@@ -103,7 +103,7 @@ export default function (fieldConfig: IFieldMapConfig): Function {
     field.entity = fieldConfig.entity || type;
     const repository = getOrCreateRepository(target.constructor.name);
     repository.fields.set(key, field);
-    const childRepository = getOrCreateRepository(type.name);
+    const childRepository = getOrCreateRepository(field.entity.prototype.constructor.name);
     childRepository.parent = repository;
     field.serialize = (
       value: Record<string, any> | Record<string, any>[],
