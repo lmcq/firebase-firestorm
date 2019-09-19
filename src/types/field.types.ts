@@ -68,7 +68,7 @@ export interface IGeoPointMeta extends IFieldMeta {
 // Field Maps
 
 export interface IFieldMapConfig extends IFieldConfig {
-  entity?: new () => IEntity;
+  entity?: new () => any;
 }
 
 export interface IFieldMapMeta extends IFieldWithEntityMeta {
