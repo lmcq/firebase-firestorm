@@ -1,7 +1,7 @@
 # Firebase Firestorm for Typescript
 
 [![Build Status](https://travis-ci.org/lmcq/firebase-firestorm.svg?branch=master)](https://travis-ci.org/lmcq/firebase-firestorm)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Financial Contributors on Open Collective](https://opencollective.com/firestorm/all/badge.svg?label=financial+contributors)](https://opencollective.com/firestorm) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/0055aad0e1244ebea87b08af2eed7906)](https://www.codacy.com/app/lmcq/firebase-firestorm?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lmcq/firebase-firestorm&amp;utm_campaign=Badge_Grade)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/0055aad0e1244ebea87b08af2eed7906)](https://www.codacy.com/app/lmcq/firebase-firestorm?utm_source=github.com&utm_medium=referral&utm_content=lmcq/firebase-firestorm&utm_campaign=Badge_Coverage)
 
@@ -502,6 +502,36 @@ by making a pull request. The project uses
 [Conventional Commits](https://www.conventionalcommits.org), so please
 make sure you follow the spec when making PRs. You must also
 include relevant tests.
+
+## Contributors
+
+### Code Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="https://github.com/lmcq/firebase-firestorm/graphs/contributors"><img src="https://opencollective.com/firestorm/contributors.svg?width=890&button=false" /></a>
+
+### Financial Contributors
+
+Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/firestorm/contribute)]
+
+#### Individuals
+
+<a href="https://opencollective.com/firestorm"><img src="https://opencollective.com/firestorm/individuals.svg?width=890"></a>
+
+#### Organizations
+
+Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/firestorm/contribute)]
+
+<a href="https://opencollective.com/firestorm/organization/0/website"><img src="https://opencollective.com/firestorm/organization/0/avatar.svg"></a>
+<a href="https://opencollective.com/firestorm/organization/1/website"><img src="https://opencollective.com/firestorm/organization/1/avatar.svg"></a>
+<a href="https://opencollective.com/firestorm/organization/2/website"><img src="https://opencollective.com/firestorm/organization/2/avatar.svg"></a>
+<a href="https://opencollective.com/firestorm/organization/3/website"><img src="https://opencollective.com/firestorm/organization/3/avatar.svg"></a>
+<a href="https://opencollective.com/firestorm/organization/4/website"><img src="https://opencollective.com/firestorm/organization/4/avatar.svg"></a>
+<a href="https://opencollective.com/firestorm/organization/5/website"><img src="https://opencollective.com/firestorm/organization/5/avatar.svg"></a>
+<a href="https://opencollective.com/firestorm/organization/6/website"><img src="https://opencollective.com/firestorm/organization/6/avatar.svg"></a>
+<a href="https://opencollective.com/firestorm/organization/7/website"><img src="https://opencollective.com/firestorm/organization/7/avatar.svg"></a>
+<a href="https://opencollective.com/firestorm/organization/8/website"><img src="https://opencollective.com/firestorm/organization/8/avatar.svg"></a>
+<a href="https://opencollective.com/firestorm/organization/9/website"><img src="https://opencollective.com/firestorm/organization/9/avatar.svg"></a>
 
 ## License
 
