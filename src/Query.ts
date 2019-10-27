@@ -1,7 +1,8 @@
 import { firestore } from 'firebase/app';
 import { Entity } from '.';
-import { IFieldMeta, ICollection, IQuery } from './types';
+import { IFieldMeta, IFieldWithEntityMeta, IEntity, ICollection, IQuery} from './types';
 import QuerySnapshot from './QuerySnapshot';
+import { getRepository } from './store';
 
 /**
  * Firestorm representation of a query. Queries can be chained
@@ -12,7 +13,6 @@ export default class Query<T extends Entity> implements IQuery<T> {
   private _Entity: new () => T;
   private _collection: ICollection<T>;
   private _native: firestore.Query;
-  private _fields: Map<string, IFieldMeta>;
 
   /**
    * Create a collection query for an [[Entity]].
@@ -24,13 +24,40 @@ export default class Query<T extends Entity> implements IQuery<T> {
   public constructor(
     Entity: new () => T,
     collection: ICollection<T>,
-    fields: Map<string, IFieldMeta>,
     native: firestore.Query,
   ) {
     this._Entity = Entity;
     this._collection = collection;
-    this._fields = fields;
     this._native = native;
+  }
+
+  /**
+   * Gets field path string from property key or property path array
+   * @param propertyOrPropPathArray
+   */
+  private getFieldPath(propertyOrPropPathArray: keyof T | [keyof T, ...string[]]): string {
+    const propPathArray =
+      Array.isArray(propertyOrPropPathArray) ?
+        propertyOrPropPathArray :
+        [propertyOrPropPathArray];
+
+    let propertyIdx = 0;
+    let Entity = this._Entity as new () => IEntity;
+    let paths = [];
+
+    do {
+      const { fields } = getRepository(Entity.prototype.constructor.name);
+      const property = propPathArray[propertyIdx];
+      const field = fields.get(property as string) as IFieldWithEntityMeta;
+      if (!field) {
+        throw new Error(`Could not find property in ${this._collection.path}`);
+      }
+      paths.push(field.name);
+      propertyIdx++;
+      Entity = field.entity;
+    } while (propertyIdx < propPathArray.length)
+
+    return paths.join('.');
   }
 
   /**
@@ -39,12 +66,10 @@ export default class Query<T extends Entity> implements IQuery<T> {
    * @param op The operation to apply.
    * @param value The value to test for.
    */
-  public where(property: keyof T, op: firestore.WhereFilterOp, value: any): Query<T> {
-    const field = this._fields.get(property as string);
-    if (field) {
-      return this.appendNativeQuery(this._native.where(field.name, op, value));
-    }
-    throw new Error(`Could not find property in ${this._collection.path}`);
+  public where(propertyOrPropPathArray: keyof T | [keyof T, ...string[]], op: firestore.WhereFilterOp, value: any): Query<T> {
+    const fieldPath = this.getFieldPath(propertyOrPropPathArray);
+
+    return this.appendNativeQuery(this._native.where(fieldPath, op, value));
   }
 
   /**
@@ -52,12 +77,10 @@ export default class Query<T extends Entity> implements IQuery<T> {
    * @param property The property to order by.
    * @param sort The order direction. Default value is ascending.
    */
-  public orderBy(property: keyof T, sort?: firestore.OrderByDirection): Query<T> {
-    const field = this._fields.get(property as string);
-    if (field) {
-      return this.appendNativeQuery(this._native.orderBy(field.name, sort));
-    }
-    throw new Error(`Could not find property in ${this._collection.path}`);
+  public orderBy(propertyOrPropPathArray: keyof T | [keyof T, ...string[]], sort?: firestore.OrderByDirection): Query<T> {
+    const fieldPath = this.getFieldPath(propertyOrPropPathArray);
+
+    return this.appendNativeQuery(this._native.orderBy(fieldPath, sort));
   }
 
   /**
@@ -131,7 +154,6 @@ export default class Query<T extends Entity> implements IQuery<T> {
     return new Query(
       this._Entity,
       this._collection,
-      this._fields,
       query,
     );
   }
