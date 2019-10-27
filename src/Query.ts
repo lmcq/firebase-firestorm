@@ -1,4 +1,4 @@
-import { firestore } from 'firebase/app';
+import { firestore } from './firestore';
 import { Entity } from '.';
 import { IFieldMeta, ICollection, IQuery } from './types';
 import QuerySnapshot from './QuerySnapshot';

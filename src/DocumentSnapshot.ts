@@ -1,7 +1,7 @@
 import Entity from './Entity';
 import { IDocumentSnapshot, ICollection } from './types/collection.types';
 import { IDocumentRef } from './types';
-import { firestore } from 'firebase/app';
+import { firestore } from './firestore';
 import { FirestoreSerializer } from './utils';
 
 export default class DocumentSnapshot <T extends Entity> implements IDocumentSnapshot<T> {
