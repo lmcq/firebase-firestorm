@@ -75,7 +75,7 @@ for more information about intiailizing firestorm.
 ````typescript
 import * as firestorm from 'firebase-firestorm';
 ...
-const firestore = firebase.initializeApp(...);
+const firestore = firebase.initializeApp(...).firestore();
 firestorm.initialize(firestore, /* options */);
 ...
 ````
@@ -222,8 +222,8 @@ const query = Collection(Post)
   .where('title', '==', 'Example Title');
 
 // Fetch and manipulate the result.
-query.get().then((snapshot): DocumentSnapshot<Post> => {
-  const post = snapshot.doc;
+query.get().then((snapshot) => {
+  const post = snapshot.docs;
   ...
 });
 ```
