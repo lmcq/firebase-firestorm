@@ -89,7 +89,7 @@ const toData = (
  * Registers a new map with firestorm.
  * @param fieldConfig The field configuration
  */
-export default function (fieldConfig: IFieldMapConfig): Function {
+export default function (fieldConfig: IFieldMapConfig = {}): Function {
   return function (target: any, key: string): void {
     const type = Reflect.getMetadata('design:type', target, key);
     const field = FieldUtils.configure(
