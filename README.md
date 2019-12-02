@@ -408,7 +408,7 @@ class for firestore's GeoPoint which basically serves the same functionality.
 
 ```typescript
 class Example extends Entity {
-  @geopoint({
+  @geoPoint({
     name: 'geopoint_property',
   })
   geopoint!: IGeoPoint;
