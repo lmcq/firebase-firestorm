@@ -203,12 +203,15 @@ subcollections from a retrieved document, or a document reference.
 ````typescript
 // Comment subcollection from document.
 const post = Collection(Post).get('post-1').then((post : Post) => {
-  const commentCollection = post.collection(Post);
+  const commentCollection = post.collection(Comment);
 });
 
 // Comment subcollection from document ref.
 const postRef = Collection(Post).doc('post-1');
-const commentCollection = postRef.collection(Post);
+const commentCollection = postRef.collection(Comment);
+// Finds all comments from commentCollection.
+const commentsSnap = await commentCollection.find();
+
 ````
 
 ##### Querying data
