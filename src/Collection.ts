@@ -197,11 +197,9 @@ class Collection <T extends Entity, P extends Entity> implements ICollection<T, 
    * Entry point for building queries.
    */
   public query(): Query<T> {
-    const fields = getRepository(this._Entity.prototype.constructor.name).fields;
     return new Query(
       this._Entity,
       this,
-      fields,
       this._native,
     );
   }

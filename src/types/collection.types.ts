@@ -9,8 +9,8 @@ export interface IEntity {
 }
 
 export interface IQuery <T extends IEntity> {
-  where(property: keyof T, op: firestore.WhereFilterOp, value: any): IQuery<T>;
-  orderBy(property: keyof T, sort?: firestore.OrderByDirection): IQuery<T>;
+  where(property: keyof T | [keyof T, ...string[]], op: firestore.WhereFilterOp, value: any): IQuery<T>;
+  orderBy(property: keyof T | [keyof T, ...string[]], sort?: firestore.OrderByDirection): IQuery<T>;
   limit(amount: number): IQuery<T>;
   startAt(...fieldValues: any[]): IQuery<T>;
   startAfter(...fieldValues: any[]): Query<T>;
