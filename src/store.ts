@@ -1,4 +1,5 @@
-import * as firebase from 'firebase/app';
+import * as firebase from './firestore';
+import * as CloudFirestore from '@google-cloud/firestore';
 import {
   IFireormConfig,
   IFieldMeta,
@@ -20,8 +21,8 @@ let store: IStore  = {
  * @param firestore A firestore instance.
  * @param config Configuration options for firestorm.
  */
-export const initialize = (firestore: firebase.firestore.Firestore, config?: IFireormConfig): void => {
-  store.firestore = firestore;
+export const initialize = (firestore: firebase.firestore.Firestore | CloudFirestore.Firestore, config?: IFireormConfig): void => {
+  store.firestore = firestore as firebase.firestore.Firestore;
   if (config) {
     (Object.keys(config) as (keyof IFireormConfig)[]).forEach((key): void => {
       store.config[key] = config[key];

@@ -1,4 +1,4 @@
-import { firestore } from 'firebase/app';
+import { firestore } from './firestore';
 import store, { getRepository } from './store';
 import { ICollectionQuery, ICollection, IDocumentRef, WriteTypes } from './types';
 import { QueryBuilder, FirestoreSerializer } from './utils';

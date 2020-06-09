@@ -1,4 +1,4 @@
-import { firestore } from 'firebase/app';
+import { firestore } from '../firestore';
 import { IDocumentRefConfig, IDocumentRefMeta, FieldTypes, IDocumentRef, IEntity, ICollection } from '../types';
 import FieldUtils from '../utils/FieldUtils';
 import { getOrCreateRepository, getRepository } from '../store';

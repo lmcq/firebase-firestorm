@@ -1,5 +1,5 @@
 import { IDocumentRef, ICollection } from '../types';
-import { firestore } from 'firebase/app';
+import { firestore } from '../firestore';
 import { FirestoreSerializer } from '../utils';
 import Collection from '../Collection';
 import Entity from '../Entity';
